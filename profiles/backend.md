@@ -6,4 +6,5 @@ Use for APIs, server actions, jobs, and other server-side logic.
 - Trace input into queries, shells, files, URLs, templates, and serialization.
 - Review idempotency, concurrency, retries, timeouts, and transaction boundaries for critical operations.
 - Review error responses, logging, rate limiting, and handling of external services according to the system's exposure.
+- Where applicable, check CSRF defenses, SSRF protections, file upload handling, webhook signature verification, and session or cookie security flags.
 - For production readiness, check readiness, health checks, and behavior when dependencies fail, where evidence is available.

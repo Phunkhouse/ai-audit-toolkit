@@ -8,14 +8,16 @@ claude_dir="${CLAUDE_SKILLS_DIR:-$HOME/.claude/skills}"
 install_codex=1
 install_claude=1
 dry_run=0
+uninstall=0
 
 usage() {
   cat <<'USAGE'
-Usage: ./scripts/install.sh [--codex-only | --claude-only] [--dry-run]
+Usage: ./scripts/install.sh [--codex-only | --claude-only] [--dry-run] [--uninstall]
 
 Links this repository's audit skills into personal Codex and Claude Code skill directories.
 Override destinations with CODEX_SKILLS_DIR and CLAUDE_SKILLS_DIR.
 Existing non-matching paths are left untouched.
+--uninstall removes only links created by this installer that still point to this repository.
 USAGE
 }
 
@@ -24,6 +26,7 @@ for arg in "$@"; do
     --codex-only) install_claude=0 ;;
     --claude-only) install_codex=0 ;;
     --dry-run) dry_run=1 ;;
+    --uninstall) uninstall=1 ;;
     --help|-h) usage; exit 0 ;;
     *) printf 'Unknown option: %s\n' "$arg" >&2; usage >&2; exit 2 ;;
   esac
@@ -39,7 +42,7 @@ install_into() {
   local label="$2"
   local source dest skill_name
 
-  if [[ "$dry_run" -eq 0 ]]; then
+  if [[ "$dry_run" -eq 0 && "$uninstall" -eq 0 ]]; then
     mkdir -p -- "$dest_dir"
   fi
 
@@ -48,7 +51,18 @@ install_into() {
     skill_name="${source##*/}"
     dest="$dest_dir/$skill_name"
 
-    if [[ -L "$dest" && "$(readlink "$dest")" == "$source" ]]; then
+    if [[ "$uninstall" -eq 1 ]]; then
+      if [[ -L "$dest" && "$(readlink "$dest")" == "$source" ]]; then
+        if [[ "$dry_run" -eq 1 ]]; then
+          printf '%s: would remove %s\n' "$label" "$dest"
+        else
+          rm -- "$dest"
+          printf '%s: removed %s\n' "$label" "$dest"
+        fi
+      elif [[ -e "$dest" || -L "$dest" ]]; then
+        printf '%s: kept unrelated path %s\n' "$label" "$dest"
+      fi
+    elif [[ -L "$dest" && "$(readlink "$dest")" == "$source" ]]; then
       printf '%s: already linked %s\n' "$label" "$dest"
     elif [[ -e "$dest" || -L "$dest" ]]; then
       printf '%s: skipped existing path %s\n' "$label" "$dest" >&2
