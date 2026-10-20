@@ -31,7 +31,7 @@
 
 ## Findings
 
-Use `SEC-001`, `COR-001` or `PRD-001` according to the audit type. Preserve a prior ID for the same issue in a repeat audit. For every finding, use the fields in `references/finding-format.md`.
+Use `SEC-001`, `COR-001` or `PRD-001` according to the audit type for a first audit. In repeat audits, preserve a prior ID for the same issue and use the next number not previously assigned for each new issue. For every finding, use the fields in `references/finding-format.md`.
 
 ### <PREFIX>-001: <Short description>
 

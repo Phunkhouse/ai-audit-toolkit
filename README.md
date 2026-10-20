@@ -47,7 +47,9 @@ In the project you want to audit, invoke `audit-security`, `audit-correctness`, 
 
 The audit first identifies the actual stack and scope. Optionally copy [`templates/project-context.md`](templates/project-context.md) to `docs/audits/context.md` in the audited project and fill in only facts that cannot be reliably derived from its repository. Check that context against the current code.
 
-Store reports in the audited project under `docs/audits/YYYY-MM-DD/` as `security.md`, `correctness.md`, or `production.md`. Use a distinct run directory if a report already exists; never overwrite a previous audit. The audit may write its report there but must not change application code or project data. Follow [`templates/report.md`](templates/report.md), including its coverage log, prior finding reconciliation, and `Not verified` table. Record the audited project's Git commit and this toolkit's commit in the report header, and note relevant uncommitted changes. Run `./scripts/validate.sh` to print the toolkit commit and working tree state; if it has no commit yet, write `uncommitted`. Findings must cite concrete evidence and use audit-specific IDs (`SEC-`, `COR-`, `PRD-`). Keep secrets, personal information, and sensitive production data out of reports.
+Store reports in the audited project under `docs/audits/YYYY-MM-DD/` as `security.md`, `correctness.md`, or `production.md`. If the target report exists, use the first free `YYYY-MM-DD-2`, `YYYY-MM-DD-3`, etc. directory; never overwrite a previous audit. Check earlier reports in `docs/audits/` and reconcile their findings. The audit may write its report there but must not change application code or project data. Run artifact-producing checks in a disposable copy outside the audited repository. Follow [`templates/report.md`](templates/report.md), including its coverage log, prior finding reconciliation, and `Not verified` table. Record the audited project's Git commit and this toolkit's commit in the report header, and note relevant uncommitted changes. Run `./scripts/validate.sh` to print the toolkit commit and working tree state; if it has no commit yet, write `uncommitted`. Findings must cite concrete evidence and use audit-specific IDs (`SEC-`, `COR-`, `PRD-`). Keep secrets, personal information, and sensitive production data out of reports.
+
+Security reports can reveal exploitable issues. For a public audited repository, keep `docs/audits/` private or ignored, or publish the report only after the relevant fixes are in place. Do not commit an unresolved vulnerability report to a public repository.
 
 ## Initial scope
 
@@ -55,4 +57,4 @@ This version covers security, correctness, and production readiness. Architectur
 
 ## Development
 
-After changing a Skill, run `./scripts/validate.sh` to check frontmatter, referenced paths and installer syntax. It also prints the toolkit commit for report headers. Preview installer actions with `./scripts/install.sh --dry-run` and removal with `./scripts/install.sh --uninstall --dry-run`.
+After changing a Skill, run `./scripts/validate.sh` to check frontmatter, referenced paths, local Markdown links and installer syntax. It also prints the toolkit commit for report headers. Preview installer actions with `./scripts/install.sh --dry-run` and removal with `./scripts/install.sh --uninstall --dry-run`.

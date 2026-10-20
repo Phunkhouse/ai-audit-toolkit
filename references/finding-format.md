@@ -23,7 +23,7 @@
 - Verification: How to confirm the fix or disprove the suspicion.
 ```
 
-Use `SEC-`, `COR-` or `PRD-` for security, correctness or production findings, respectively. Reuse a prior ID for the same still-open or regressed issue; assign the next unused ID for a new issue. Order findings by severity and impact. Do not repeat the same root cause in multiple findings. Redact sensitive values. If a check has no file and line (for example, missing operational configuration), name the precise artifact or access boundary and explain why a line reference is unavailable.
+Use `SEC-`, `COR-` or `PRD-` for security, correctness or production findings, respectively. For a repeat audit, reuse the prior ID for the same still-open or regressed issue. Assign the next number not used in any previous report of that audit type to a new issue; start at `001` only for the first audit. Order findings by severity and impact. Do not repeat the same root cause in multiple findings. Redact sensitive values. If a check has no file and line (for example, missing operational configuration), name the precise artifact or access boundary and explain why a line reference is unavailable.
 
 ## Conclusion
 

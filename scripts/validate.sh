@@ -37,7 +37,7 @@ for skill_dir in "$repo_dir"/skills/*; do
       printf 'Missing reference %s in %s\n' "$reference" "$skill" >&2
       exit 1
     fi
-  done < <(grep -oE '\.\./\.\./(references|profiles|templates)/[A-Za-z0-9._/-]+' "$skill" | sort -u || true)
+  done < <(grep -oE '\.\./\.\./(references|profiles|templates)/[A-Za-z0-9._/-]+' "$skill" | sed 's/[.,;:)]*$//' | sort -u || true)
 
   printf 'Valid: %s\n' "$name"
   count=$((count + 1))
@@ -48,8 +48,23 @@ if [[ "$count" -eq 0 ]]; then
   exit 1
 fi
 
+while IFS= read -r doc; do
+  while IFS= read -r link; do
+    target="${link:2:${#link}-3}"
+    target="${target%%#*}"
+    target="${target%%\?*}"
+    case "$target" in
+      ''|http://*|https://*|mailto:*|data:*|//*|/*) continue ;;
+    esac
+    if [[ ! -e "$(dirname "$doc")/$target" ]]; then
+      printf 'Missing Markdown link %s in %s\n' "$target" "$doc" >&2
+      exit 1
+    fi
+  done < <(grep -oE '\]\([^)]*\)' "$doc" || true)
+done < <(find "$repo_dir" -path "$repo_dir/.git" -prune -o -type f -name '*.md' -print)
+
 bash -n "$script_dir/install.sh"
-printf 'Validated %s Skills and installer syntax.\n' "$count"
+printf 'Validated %s Skills, local Markdown links and installer syntax.\n' "$count"
 if git -C "$repo_dir" rev-parse --verify HEAD >/dev/null 2>&1; then
   printf 'Toolkit commit: %s\n' "$(git -C "$repo_dir" rev-parse HEAD)"
   if [[ -n "$(git -C "$repo_dir" status --porcelain --untracked-files=normal)" ]]; then
