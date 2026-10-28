@@ -14,3 +14,8 @@ Use only when the audited application calls language models or gives agents tool
 - Measure or inspect model call counts, context and output token counts, retries, time to first token and total latency for critical operations.
 - Identify duplicate requests, unnecessary sequential calls and repeated context processing. Evaluate caching, batching or concurrency only where permissions, freshness and workflow dependencies allow them.
 - Assess cost per successfully completed operation with model, pricing source and date, token usage and output quality requirements recorded. Do not claim that a faster or cheaper alternative preserves quality without evidence.
+
+## Architecture checks
+
+- Map orchestration, prompt and retrieval policy, provider integration and tool execution responsibilities. Trace where application invariants and permission boundaries are enforced independently of model output.
+- Assess provider and tool contracts, state ownership and evaluation boundaries against documented change or quality requirements. Do not propose a provider abstraction or agent framework solely for hypothetical future flexibility.

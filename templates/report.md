@@ -29,9 +29,19 @@
 | --- | --- | --- | --- |
 | <area> | <coverage> | <files, tests, commands> | <limitation> |
 
+## Architecture overview (optional)
+
+Include this section for architecture audits; omit it for other audits unless useful. Map the observed system using evidence and a compact diagram if it adds clarity. Mark inferred or inaccessible relationships as unverified.
+
+| Component or boundary | Responsibility and data ownership | Dependencies or contracts | Evidence and limits |
+| --- | --- | --- | --- |
+| <component> | <responsibility and owner> | <relationship> | <source or unknown> |
+
+Record relevant decision rationale, constraints and accepted tradeoffs with sources. Keep acceptable tradeoffs outside active findings. When rationale is unknown, state what evidence is missing.
+
 ## Findings
 
-Use `SEC-001`, `COR-001`, `PRD-001` or `PERF-001` according to the audit type for a first audit. In repeat audits, preserve a prior ID for the same issue and use the next number not previously assigned for each new issue. For every finding, use the fields in `references/finding-format.md`.
+Use `SEC-001`, `COR-001`, `PRD-001`, `PERF-001` or `ARC-001` according to the audit type for a first audit. In repeat audits, preserve a prior ID for the same issue and use the next number not previously assigned for each new issue. For every finding, use the fields in `references/finding-format.md`.
 
 ### <PREFIX>-001: <Short description>
 
@@ -44,6 +54,8 @@ Use `SEC-001`, `COR-001`, `PRD-001` or `PERF-001` according to the audit type fo
 - Impact: <realistic scenario and conditions>
 - Remediation: <smallest meaningful fix>
 - Verification: <how to confirm the fix>
+
+For architecture findings, include the affected requirement or change scenario, decision context and counter-evidence, and a proportionate remediation with migration steps and risks. Distinguish improvement priority from release-blocking impact.
 
 ## Performance measurements (optional)
 
