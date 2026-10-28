@@ -28,3 +28,9 @@ Fill in only information that cannot be reliably inferred from the current repos
 - Critical journeys, expected data volumes and concurrency:
 - Existing latency, throughput or cost targets and their sources:
 - Available baseline measurements and approved isolated test environment or resource limits:
+
+## Architecture context (optional)
+
+- Architecture decisions and their rationale (links to existing records):
+- Team or delivery constraints and documented planned changes relevant to structure:
+- Intentional tradeoffs, compatibility requirements and independent release or data ownership expectations that cannot be inferred from the repository:

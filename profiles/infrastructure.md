@@ -15,3 +15,8 @@ Use for deployment, CI/CD, hosting, networks, and external services when they ar
 - Correlate latency and successful throughput with CPU, memory, I/O, network limits and resource saturation. Separate cold starts from steady-state behavior.
 - For jobs and queues, inspect processing time, waiting time, backlog growth and retry amplification at the expected arrival rate.
 - Relate scaling limits and resource cost to the workload; do not infer production capacity from an unrepresentative local run.
+
+## Architecture checks
+
+- Verify deployment and failure boundaries using available configuration. Do not infer operational independence from source packages or service names.
+- Trace coordinated release requirements and shared infrastructure dependencies against the project's actual rollout and isolation needs; record inaccessible runtime topology as unverified.

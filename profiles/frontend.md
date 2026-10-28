@@ -14,3 +14,8 @@ Use for client-side UI, server-side rendering, and rendering layers as appropria
 - Trace critical journeys for excessive JavaScript, image or font transfers, blocking resources and request waterfalls. Inspect the actual bundles and loading behavior before recommending changes.
 - Use rendering profiles to identify long tasks, repeated rendering or expensive client computation. For web pages, consider LCP, INP and CLS with the device, network and lab or field context recorded.
 - Check repeated fetching and browser or CDN caching against expected reuse, data freshness and authorization boundaries.
+
+## Architecture checks
+
+- Trace ownership of business rules, UI state and server state across critical flows. Identify duplicated policy or conflicting ownership with a concrete change or correctness consequence.
+- Review boundaries between presentation, application logic and external API contracts. Assess whether changes can be localized and tested under the actual framework conventions; avoid requiring layers without a demonstrated need.

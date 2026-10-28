@@ -23,9 +23,11 @@
 - Verification: How to confirm the fix or disprove the suspicion.
 ```
 
-Use `SEC-`, `COR-`, `PRD-` or `PERF-` for security, correctness, production or performance findings, respectively. For a repeat audit, reuse the prior ID for the same still-open or regressed issue. Assign the next number not used in any previous report of that audit type to a new issue; start at `001` only for the first audit. Order findings by severity and impact. Do not repeat the same root cause in multiple findings. Redact sensitive values. If a check has no file and line (for example, missing operational configuration), name the precise artifact or access boundary and explain why a line reference is unavailable.
+Use `SEC-`, `COR-`, `PRD-`, `PERF-` or `ARC-` for security, correctness, production, performance or architecture findings, respectively. For a repeat audit, reuse the prior ID for the same still-open or regressed issue. Assign the next number not used in any previous report of that audit type to a new issue; start at `001` only for the first audit. Order findings by severity and impact. Do not repeat the same root cause in multiple findings. Redact sensitive values. If a check has no file and line (for example, missing operational configuration), name the precise artifact or access boundary and explain why a line reference is unavailable.
 
 For performance findings, state whether evidence is measured, code-proven or a hypothesis, and separate observed behavior from unverified runtime impact. Use the conditions and comparison guidance in `performance-measurement.md` when interpreting measurements. Reuse or cross-reference evidence from other audit types rather than presenting the same root cause as independent findings.
+
+For architecture findings, connect structural evidence to an affected requirement or concrete change scenario. Include known decision context, counter-evidence, and the smallest useful remediation with migration steps, risks and verification. Use `architecture-review.md` to distinguish a defect from an accepted tradeoff or an unverified assumption. Explain release-blocking impact separately from improvement priority, and cross-reference overlapping findings from other audit types.
 
 ## Conclusion
 

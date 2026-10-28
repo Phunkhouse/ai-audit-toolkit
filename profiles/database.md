@@ -14,3 +14,8 @@ Use for relational, document, and other persistent stores; adapt the questions t
 - Trace query counts across representative flows for N+1 patterns, repeated queries, unnecessary columns or rows, and pagination behavior as data grows.
 - Use available execution plans and representative data to assess scan and join work, sorting and relevant indexes. An absent index alone is not a finding.
 - Review transaction duration, lock contention and pool waits using available evidence. Run query analysis that executes statements only against an isolated test database.
+
+## Architecture checks
+
+- Map ownership of important data, write paths and invariants. Assess shared schema access and transaction boundaries against actual consistency requirements.
+- Where components deploy independently, review schema evolution and migration coordination for a concrete contract risk. Do not assume a shared database requires splitting.
