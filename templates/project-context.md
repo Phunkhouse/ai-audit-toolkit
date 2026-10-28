@@ -22,3 +22,9 @@ Fill in only information that cannot be reliably inferred from the current repos
 - Recovery, backups, monitoring, and release process (with links to evidence):
 - Known limitations and intentional decisions:
 - Owner and date this context was last checked:
+
+## Performance expectations (optional)
+
+- Critical journeys, expected data volumes and concurrency:
+- Existing latency, throughput or cost targets and their sources:
+- Available baseline measurements and approved isolated test environment or resource limits:

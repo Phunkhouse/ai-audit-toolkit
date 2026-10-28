@@ -8,3 +8,9 @@ Use only when the audited application calls language models or gives agents tool
 - Review agent tool permissions, approval boundaries, tenant isolation and limits on side effects.
 - Check cost abuse controls: authentication, rate limits, quotas, token budgets and safeguards against unbounded retries or loops.
 - Distinguish demonstrated exploits from hypothetical prompt injection patterns. Record the attacker-controlled input, reachable path, missing control and realistic impact.
+
+## Performance checks
+
+- Measure or inspect model call counts, context and output token counts, retries, time to first token and total latency for critical operations.
+- Identify duplicate requests, unnecessary sequential calls and repeated context processing. Evaluate caching, batching or concurrency only where permissions, freshness and workflow dependencies allow them.
+- Assess cost per successfully completed operation with model, pricing source and date, token usage and output quality requirements recorded. Do not claim that a faster or cheaper alternative preserves quality without evidence.

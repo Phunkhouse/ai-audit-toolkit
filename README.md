@@ -9,10 +9,12 @@ skills/
   audit-security/SKILL.md
   audit-correctness/SKILL.md
   audit-production/SKILL.md
+  audit-performance/SKILL.md
 references/
   audit-rules.md
   finding-format.md
   severity.md
+  performance-measurement.md
 profiles/
   frontend.md
   backend.md
@@ -43,17 +45,25 @@ The links point to this local clone. On another device, clone the repository aga
 
 ## Usage
 
-In the project you want to audit, invoke `audit-security`, `audit-correctness`, or `audit-production`. In Claude Code, use `/audit-security`; in Codex, select the Skill or mention `$audit-security`.
+In the project you want to audit, invoke `audit-security`, `audit-correctness`, `audit-production`, or `audit-performance`. In Claude Code, use `/audit-security`; in Codex, select the Skill or mention `$audit-security`.
 
 The audit first identifies the actual stack and scope. Optionally copy [`templates/project-context.md`](templates/project-context.md) to `docs/audits/context.md` in the audited project and fill in only facts that cannot be reliably derived from its repository. Check that context against the current code.
 
-Store reports in the audited project under `docs/audits/YYYY-MM-DD/` as `security.md`, `correctness.md`, or `production.md`. If the target report exists, use the first free `YYYY-MM-DD-2`, `YYYY-MM-DD-3`, etc. directory; never overwrite a previous audit. Check earlier reports in `docs/audits/` and reconcile their findings. The audit may write its report there but must not change application code or project data. Run artifact-producing checks in a disposable copy outside the audited repository. Follow [`templates/report.md`](templates/report.md), including its coverage log, prior finding reconciliation, and `Not verified` table. Record the audited project's Git commit and this toolkit's commit in the report header, and note relevant uncommitted changes. Run `./scripts/validate.sh` to print the toolkit commit and working tree state; if it has no commit yet, write `uncommitted`. Findings must cite concrete evidence and use audit-specific IDs (`SEC-`, `COR-`, `PRD-`). Keep secrets, personal information, and sensitive production data out of reports.
+Store reports in the audited project under `docs/audits/YYYY-MM-DD/` as `security.md`, `correctness.md`, `production.md`, or `performance.md`. If the target report exists, use the first free `YYYY-MM-DD-2`, `YYYY-MM-DD-3`, etc. directory; never overwrite a previous audit. Check earlier reports in `docs/audits/` and reconcile their findings. The audit may write its report there but must not change application code or project data. Run artifact-producing checks in a disposable copy outside the audited repository. Follow [`templates/report.md`](templates/report.md), including its coverage log, prior finding reconciliation, and `Not verified` table. Record the audited project's Git commit and this toolkit's commit in the report header, and note relevant uncommitted changes. Run `./scripts/validate.sh` to print the toolkit commit and working tree state; if it has no commit yet, write `uncommitted`. Findings must cite concrete evidence and use audit-specific IDs (`SEC-`, `COR-`, `PRD-`, `PERF-`). Keep secrets, personal information, and sensitive production data out of reports.
 
 Security reports can reveal exploitable issues. For a public audited repository, keep `docs/audits/` private or ignored, or publish the report only after the relevant fixes are in place. Do not commit an unresolved vulnerability report to a public repository.
 
-## Initial scope
+## Performance audits
 
-This version covers security, correctness, and production readiness. Architecture, performance, and triage can be added after experience with real audits. The toolkit does not fix the application or run intrusive tests.
+`audit-performance` reviews critical flows for latency, throughput, resource use and operating cost. It uses applicable frontend, backend, database, infrastructure and AI/LLM profiles. It can work from code and existing evidence when measurements are unavailable, with runtime impact explicitly marked unverified.
+
+Follow [`references/performance-measurement.md`](references/performance-measurement.md) for representative workloads, comparable baselines, safe execution and measurement records. The optional section in the report template records benchmark conditions and results. Production load tests and billable external experiments require separate explicit authorization.
+
+After pulling a version that adds this Skill, rerun `./scripts/install.sh` to create its links. Existing Skill links continue pointing to their updated files.
+
+## Current scope
+
+This version covers security, correctness, production readiness and performance. Architecture and triage can be added after experience with real audits. The toolkit does not fix the application or run intrusive tests.
 
 ## Development
 
