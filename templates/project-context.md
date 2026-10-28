@@ -34,3 +34,9 @@ Fill in only information that cannot be reliably inferred from the current repos
 - Architecture decisions and their rationale (links to existing records):
 - Team or delivery constraints and documented planned changes relevant to structure:
 - Intentional tradeoffs, compatibility requirements and independent release or data ownership expectations that cannot be inferred from the repository:
+
+## Web quality context (optional)
+
+- Representative public and authenticated pages, roles, locales and supported devices:
+- Accessibility requirements, performance budgets and intentional indexing exclusions:
+- Existing local or isolated preview setup, safe test accounts and permitted interactions (without credentials):

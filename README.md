@@ -11,12 +11,14 @@ skills/
   audit-production/SKILL.md
   audit-performance/SKILL.md
   audit-architecture/SKILL.md
+  audit-web-quality/SKILL.md
 references/
   audit-rules.md
   finding-format.md
   severity.md
   performance-measurement.md
   architecture-review.md
+  web-quality-review.md
 profiles/
   frontend.md
   backend.md
@@ -47,11 +49,11 @@ The links point to this local clone. On another device, clone the repository aga
 
 ## Usage
 
-In the project you want to audit, invoke `audit-security`, `audit-correctness`, `audit-production`, `audit-performance`, or `audit-architecture`. In Claude Code, use `/audit-security`; in Codex, select the Skill or mention `$audit-security`.
+In the project you want to audit, invoke `audit-security`, `audit-correctness`, `audit-production`, `audit-performance`, `audit-architecture`, or `audit-web-quality`. In Claude Code, use `/audit-security`; in Codex, select the Skill or mention `$audit-security`.
 
 The audit first identifies the actual stack and scope. Optionally copy [`templates/project-context.md`](templates/project-context.md) to `docs/audits/context.md` in the audited project and fill in only facts that cannot be reliably derived from its repository. Check that context against the current code.
 
-Store reports in the audited project under `docs/audits/YYYY-MM-DD/` as `security.md`, `correctness.md`, `production.md`, `performance.md`, or `architecture.md`. If the target report exists, use the first free `YYYY-MM-DD-2`, `YYYY-MM-DD-3`, etc. directory; never overwrite a previous audit. Check earlier reports in `docs/audits/` and reconcile their findings. The audit may write its report there but must not change application code or project data. Run artifact-producing checks in a disposable copy outside the audited repository. Follow [`templates/report.md`](templates/report.md), including its coverage log, prior finding reconciliation, and `Not verified` table. Record the audited project's Git commit and this toolkit's commit in the report header, and note relevant uncommitted changes. Run `./scripts/validate.sh` to print the toolkit commit and working tree state; if it has no commit yet, write `uncommitted`. Findings must cite concrete evidence and use audit-specific IDs (`SEC-`, `COR-`, `PRD-`, `PERF-`, `ARC-`). Keep secrets, personal information, and sensitive production data out of reports.
+Store reports in the audited project under `docs/audits/YYYY-MM-DD/` as `security.md`, `correctness.md`, `production.md`, `performance.md`, `architecture.md`, or `web-quality.md`. If the target report exists, use the first free `YYYY-MM-DD-2`, `YYYY-MM-DD-3`, etc. directory; never overwrite a previous audit. Check earlier reports in `docs/audits/` and reconcile their findings. The audit may write its report there but must not change application code or project data. Run artifact-producing checks in a disposable copy outside the audited repository. Follow [`templates/report.md`](templates/report.md), including its coverage log, prior finding reconciliation, and `Not verified` table. Record the audited project's Git commit and this toolkit's commit in the report header, and note relevant uncommitted changes. Run `./scripts/validate.sh` to print the toolkit commit and working tree state; if it has no commit yet, write `uncommitted`. Findings must cite concrete evidence and use audit-specific IDs (`SEC-`, `COR-`, `PRD-`, `PERF-`, `ARC-`, `WEB-`). Keep secrets, personal information, and sensitive production data out of reports.
 
 Security reports can reveal exploitable issues. For a public audited repository, keep `docs/audits/` private or ignored, or publish the report only after the relevant fixes are in place. Do not commit an unresolved vulnerability report to a public repository.
 
@@ -67,11 +69,19 @@ Follow [`references/performance-measurement.md`](references/performance-measurem
 
 Follow [`references/architecture-review.md`](references/architecture-review.md) for evidence standards, counter-evidence and proportionate remediation. The optional architecture overview in the report template captures components, relationships and their sources. A monolith, large file or missing architectural pattern is not a defect on its own; release blockers require a concrete impact on the current release.
 
+## Web quality audits
+
+`audit-web-quality` reviews representative pages and states of a running web application using available Lighthouse and browser tools. It covers applicable performance, accessibility, best-practices and technical SEO checks, plus targeted manual checks for keyboard operation, focus, forms and responsive layout. It records authentication, device and run conditions and treats intentional indexing exclusions in context.
+
+Follow [`references/web-quality-review.md`](references/web-quality-review.md) for the Lighthouse workflow, a CLI example, manual checks and interpretation limits. The optional web quality section in the report template records per-page coverage and results. Automated scores do not establish complete accessibility conformance, security, search visibility or real-user performance. Shared performance findings are cross-referenced rather than counted twice.
+
+Run against a local or isolated preview environment. Keep raw browser artifacts outside the audited repository and include redacted evidence in `web-quality.md`. No Lighthouse dependency is installed by the toolkit; missing tooling or inaccessible pages are recorded as `Not verified`.
+
 After pulling a version that adds a Skill, rerun `./scripts/install.sh` to create its links. Existing Skill links continue pointing to their updated files.
 
 ## Current scope
 
-This version covers security, correctness, production readiness, performance and architecture. Triage can be added after experience with real audits. The toolkit does not fix the application or run intrusive tests.
+This version covers security, correctness, production readiness, performance, architecture and web quality. Triage can be added after experience with real audits. The toolkit does not fix the application or run intrusive tests.
 
 ## Development
 

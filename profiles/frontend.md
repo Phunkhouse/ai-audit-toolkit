@@ -19,3 +19,9 @@ Use for client-side UI, server-side rendering, and rendering layers as appropria
 
 - Trace ownership of business rules, UI state and server state across critical flows. Identify duplicated policy or conflicting ownership with a concrete change or correctness consequence.
 - Review boundaries between presentation, application logic and external API contracts. Assess whether changes can be localized and tested under the actual framework conventions; avoid requiring layers without a demonstrated need.
+
+## Web quality checks
+
+- Review representative rendered pages and states with available Lighthouse and browser tools. Record device, authentication and environment context; verify that scans reached the intended content.
+- Combine applicable automated checks with targeted keyboard, focus, form, responsive layout and accessibility checks. Record manual coverage and limitations independently of category scores.
+- Evaluate technical SEO only against intended indexing behavior. Private pages and previews may deliberately use `noindex`; cross-reference performance or security findings for shared root causes.

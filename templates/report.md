@@ -41,7 +41,7 @@ Record relevant decision rationale, constraints and accepted tradeoffs with sour
 
 ## Findings
 
-Use `SEC-001`, `COR-001`, `PRD-001`, `PERF-001` or `ARC-001` according to the audit type for a first audit. In repeat audits, preserve a prior ID for the same issue and use the next number not previously assigned for each new issue. For every finding, use the fields in `references/finding-format.md`.
+Use `SEC-001`, `COR-001`, `PRD-001`, `PERF-001`, `ARC-001` or `WEB-001` according to the audit type for a first audit. In repeat audits, preserve a prior ID for the same issue and use the next number not previously assigned for each new issue. For every finding, use the fields in `references/finding-format.md`.
 
 ### <PREFIX>-001: <Short description>
 
@@ -66,6 +66,16 @@ For each measurement set, record the scenario, command or evidence source, tool 
 | Scenario and measurement set | Metric and unit | Observed result | Baseline or target and source | Evidence or artifact |
 | --- | --- | --- | --- | --- |
 | <scenario and conditions above> | <metric, unit> | <value and variability> | <comparable value and source, or not available> | <redacted evidence reference> |
+
+## Web quality results (optional)
+
+Include this section for web quality audits; omit it for other audits unless useful. Record the environment and build, tool and browser versions, resolved viewport/emulation/throttling settings, locale, cache/storage state, commands and run budget. Confirm the actual final page and authentication role without exposing credentials or sensitive URLs. Keep raw browser profiles and JSON/HTML reports outside the repository; include essential redacted evidence here.
+
+| Page and state | Device profile and run count | Applicable category scores or unavailable reason | Manual checks completed | Evidence and limitations |
+| --- | --- | --- | --- | --- |
+| <route, role and observed final page> | <profile, count> | <per-run results or summary and variability> | <checks actually completed> | <redacted evidence and gaps> |
+
+Use the performance measurement section for relevant numeric metrics and comparable baselines. Identify intentional SEO exclusions and skipped categories explicitly. Category scores alone do not prove accessibility conformance, security, search visibility or real-user performance.
 
 ## Previous findings
 
