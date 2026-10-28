@@ -31,7 +31,7 @@
 
 ## Findings
 
-Use `SEC-001`, `COR-001` or `PRD-001` according to the audit type for a first audit. In repeat audits, preserve a prior ID for the same issue and use the next number not previously assigned for each new issue. For every finding, use the fields in `references/finding-format.md`.
+Use `SEC-001`, `COR-001`, `PRD-001` or `PERF-001` according to the audit type for a first audit. In repeat audits, preserve a prior ID for the same issue and use the next number not previously assigned for each new issue. For every finding, use the fields in `references/finding-format.md`.
 
 ### <PREFIX>-001: <Short description>
 
@@ -40,10 +40,20 @@ Use `SEC-001`, `COR-001` or `PRD-001` according to the audit type for a first au
 - Status: Confirmed | Suspected
 - Previous finding: <ID and report path, or none>
 - Location: `<path:line or exact artifact>`
-- Evidence: <specific behavior or result; include what was checked to disprove it>
+- Evidence: <specific behavior or result; include what was checked to disprove it; for performance, label it measured, code-proven or a hypothesis>
 - Impact: <realistic scenario and conditions>
 - Remediation: <smallest meaningful fix>
 - Verification: <how to confirm the fix>
+
+## Performance measurements (optional)
+
+Include this section for performance audits; omit it for other audits unless relevant. If no measurements were possible, state that explicitly and record missing evidence under `Not verified`.
+
+For each measurement set, record the scenario, command or evidence source, tool version, timestamp, relevant commits, environment and build mode, dataset size and shape, network conditions, request mix, concurrency, cache state, warm-up and sample count or duration. Describe variability and any errors or timeouts. Keep comparable baseline conditions explicit; use `not available` when a baseline or target is missing.
+
+| Scenario and measurement set | Metric and unit | Observed result | Baseline or target and source | Evidence or artifact |
+| --- | --- | --- | --- | --- |
+| <scenario and conditions above> | <metric, unit> | <value and variability> | <comparable value and source, or not available> | <redacted evidence reference> |
 
 ## Previous findings
 
