@@ -25,3 +25,8 @@ Use for client-side UI, server-side rendering, and rendering layers as appropria
 - Review representative rendered pages and states with available Lighthouse and browser tools. Record device, authentication and environment context; verify that scans reached the intended content.
 - Combine applicable automated checks with targeted keyboard, focus, form, responsive layout and accessibility checks. Record manual coverage and limitations independently of category scores.
 - Evaluate technical SEO only against intended indexing behavior. Private pages and previews may deliberately use `noindex`; cross-reference performance or security findings for shared root causes.
+
+## Scalability and cost checks
+
+- Trace page views, polling, assets and cache misses to actual origin work, transfer and provider-billed operations; distinguish client traffic from the billable units it generates.
+- Assess safe reductions in repeated fetching or asset delivery against current usage and growth assumptions. Preserve authorization and freshness, and do not add delivery infrastructure without a demonstrated benefit.

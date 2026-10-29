@@ -40,3 +40,10 @@ Fill in only information that cannot be reliably inferred from the current repos
 - Representative public and authenticated pages, roles, locales and supported devices:
 - Accessibility requirements, performance budgets and intentional indexing exclusions:
 - Existing local or isolated preview setup, safe test accounts and permitted interactions (without credentials):
+
+## Scalability and cost context (optional)
+
+- Monthly budget, currency, planned commercial use and relevant permitted-use constraints:
+- Current usage/billing evidence, shared account allowances and sources that can be accessed safely:
+- Growth horizon, expected operation mix, peak load and data retention assumptions:
+- Delivery/recovery requirements, operator capacity and acceptable migration effort or downtime:

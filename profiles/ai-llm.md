@@ -19,3 +19,8 @@ Use only when the audited application calls language models or gives agents tool
 
 - Map orchestration, prompt and retrieval policy, provider integration and tool execution responsibilities. Trace where application invariants and permission boundaries are enforced independently of model output.
 - Assess provider and tool contracts, state ownership and evaluation boundaries against documented change or quality requirements. Do not propose a provider abstraction or agent framework solely for hypothetical future flexibility.
+
+## Scalability and cost checks
+
+- Project model/API usage, token or request quotas, rate limits, retries and fallback-provider charges from the actual operation mix. Verify current rates and account limits; free credits are not a permanent zero-cost baseline.
+- Compare caching, batching, budgets and alternative models only where quality, permissions and freshness requirements are maintained. Include evaluation and migration effort in estimated benefits.

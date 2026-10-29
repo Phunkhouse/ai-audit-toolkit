@@ -20,3 +20,9 @@ Use for deployment, CI/CD, hosting, networks, and external services when they ar
 
 - Verify deployment and failure boundaries using available configuration. Do not infer operational independence from source packages or service names.
 - Trace coordinated release requirements and shared infrastructure dependencies against the project's actual rollout and isolation needs; record inaccessible runtime topology as unverified.
+
+## Scalability and cost checks
+
+- Verify account-level versus project-level quotas, resets, spend controls, commercial eligibility and behavior after limits using current official sources and available account evidence.
+- Include self-hosted hardware, power, network, maintenance and recovery constraints. Review monitoring, backup/restore evidence and single points of failure against requirements before proposing redundancy or migration.
+- Compare keeping the setup, small optimizations, eligible plan changes and relevant alternatives over the same horizon, including transition costs and exit risks.
