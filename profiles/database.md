@@ -19,3 +19,8 @@ Use for relational, document, and other persistent stores; adapt the questions t
 
 - Map ownership of important data, write paths and invariants. Assess shared schema access and transaction boundaries against actual consistency requirements.
 - Where components deploy independently, review schema evolution and migration coordination for a concrete contract risk. Do not assume a shared database requires splitting.
+
+## Scalability and cost checks
+
+- Model storage growth and retention alongside compute, query work, connections and any billable transfer or backup dimensions. Verify the actual plan and its behavior at limits rather than assuming a free database can grow through overage.
+- Assess cleanup, query improvements, resource adjustments and migration using comparable data volumes and recovery requirements. Do not reduce backup coverage or data integrity to meet a cost target.

@@ -41,7 +41,7 @@ Record relevant decision rationale, constraints and accepted tradeoffs with sour
 
 ## Findings
 
-Use `SEC-001`, `COR-001`, `PRD-001`, `PERF-001`, `ARC-001` or `WEB-001` according to the audit type for a first audit. In repeat audits, preserve a prior ID for the same issue and use the next number not previously assigned for each new issue. For every finding, use the fields in `references/finding-format.md`.
+Use `SEC-001`, `COR-001`, `PRD-001`, `PERF-001`, `ARC-001`, `WEB-001` or `SCE-001` according to the audit type for a first audit. In repeat audits, preserve a prior ID for the same issue and use the next number not previously assigned for each new issue. For every finding, use the fields in `references/finding-format.md`.
 
 ### <PREFIX>-001: <Short description>
 
@@ -76,6 +76,37 @@ Include this section for web quality audits; omit it for other audits unless use
 | <route, role and observed final page> | <profile, count> | <per-run results or summary and variability> | <checks actually completed> | <redacted evidence and gaps> |
 
 Use the performance measurement section for relevant numeric metrics and comparable baselines. Identify intentional SEO exclusions and skipped categories explicitly. Category scores alone do not prove accessibility conformance, security, search visibility or real-user performance.
+
+## Scalability and cost assessment (optional)
+
+Include this section for scalability and cost audits; omit it for other audits unless relevant. Separate observed usage from estimates and unverified inputs. Record budget, currency, observation period, forecast horizon and any tax or currency-conversion assumptions. Never use zero as a substitute for missing usage or billing evidence.
+
+### Resource, quota and terms register
+
+Use a row per material billed dimension or restriction. Record actual product/plan, region, account/project scope, shared allowances, units and reset windows. Include prices, billing-unit rounding, fixed fees, promotional expiry and applicable commercial or operational restrictions. Distinguish public documentation from verified account settings.
+
+| Resource and dimension | Observed usage and window | Quota, price or applicable restriction | Behavior at limit and controls | Source URL, verification date and uncertainty |
+| --- | --- | --- | --- | --- |
+| <resource, plan, region, scope> | <usage and source, or not verified> | <units, currency, period and terms> | <stop, throttle, charge or plan change> | <official source and account evidence limits> |
+
+### Current, 10x and 100x scenarios
+
+Define workload drivers, fixed inputs, bursts, retention and horizon for each scenario. Show equations and input sources, using actual rate schedules and allowance scopes. If a plan cannot support a scenario, label it infeasible and price any eligible alternative separately. Estimates are not measured capacity or load-test results.
+
+| Scenario | Workload assumptions and model | First constraint and resulting behavior | Cost range and currency | Confidence and missing evidence |
+| --- | --- | --- | --- | --- |
+| Current | <observed inputs and window> | <limit/headroom or unknown> | <observed or estimated, with basis> | <evidence strength> |
+| 10x | <drivers, horizon and equations> | <first limit and behavior> | <range, or not verified> | <assumptions and gaps> |
+| 100x | <drivers, horizon and equations> | <first limit and behavior> | <range, or not verified> | <assumptions and gaps> |
+
+### Prioritized decisions and triggers
+
+Always assess keeping the current setup. Compare only relevant optimizations, eligible plan changes or migrations. Include current risks and future action horizons separately from finding severity. Account for cash cost, operator effort, one-time transition costs and reliability/security tradeoffs; mark unpriced effort explicitly.
+
+| Option or finding ID | Priority and decision now | Expected impact, effort and risks | Measurable trigger, window, source and preparation lead time | Next action and verification |
+| --- | --- | --- | --- | --- |
+| Keep current setup | <adequate, conditional or insufficient with evidence> | <cost and requirement assessment> | <revisit condition> | <measurement or review step> |
+| <optimization, plan change or migration> | <act now, prepare or defer and why> | <estimated impact with assumptions and uncertainty> | <signal, justified threshold and window> | <concrete action, owner if known, and validation> |
 
 ## Previous findings
 

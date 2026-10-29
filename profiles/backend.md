@@ -19,3 +19,8 @@ Use for APIs, server actions, jobs, and other server-side logic.
 
 - Trace business rules across request handlers, jobs and domain modules. Check responsibility boundaries and whether critical invariants are enforced consistently across entry points.
 - Review dependencies on persistence and external providers, and API, event or job contracts across independently released components. Link coupling to an actual compatibility or change-impact problem.
+
+## Scalability and cost checks
+
+- Map critical operations to execution, external API and message costs, including retries, polling and failed attempts. Compare peak concurrency and execution duration with verified plan limits.
+- For jobs, assess processing capacity, backlog age, durable recovery and bounded retries against delivery requirements. Evaluate batching or deduplication before adding services or moving workers.
