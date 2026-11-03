@@ -41,7 +41,7 @@ Record relevant decision rationale, constraints and accepted tradeoffs with sour
 
 ## Findings
 
-Use `SEC-001`, `COR-001`, `PRD-001`, `PERF-001`, `ARC-001`, `WEB-001` or `SCE-001` according to the audit type for a first audit. In repeat audits, preserve a prior ID for the same issue and use the next number not previously assigned for each new issue. For every finding, use the fields in `references/finding-format.md`.
+Use `SEC-001`, `COR-001`, `PRD-001`, `PERF-001`, `ARC-001`, `WEB-001`, `SCE-001` or `LEG-001` according to the audit type for a first audit. In repeat audits, preserve a prior ID for the same issue and use the next number not previously assigned for each new issue. For every finding, use the fields in `references/finding-format.md`.
 
 ### <PREFIX>-001: <Short description>
 
@@ -107,6 +107,34 @@ Always assess keeping the current setup. Compare only relevant optimizations, el
 | --- | --- | --- | --- | --- |
 | Keep current setup | <adequate, conditional or insufficient with evidence> | <cost and requirement assessment> | <revisit condition> | <measurement or review step> |
 | <optimization, plan change or migration> | <act now, prepare or defer and why> | <estimated impact with assumptions and uncertainty> | <signal, justified threshold and window> | <concrete action, owner if known, and validation> |
+
+## Legal readiness assessment (optional)
+
+Include this section for legal readiness audits; omit it for other audits unless relevant. Establish operator, jurisdictions/markets, audience/contract model and the review and target launch dates. Separate observed facts, operator statements, assumptions and missing inputs. List excluded markets/topics and which conclusions they limit. Do not issue an overall compliance score or unrestricted legal clearance.
+
+### Primary-source register
+
+Retrieve and read the actual source; an entry-point URL alone is not verification. Distinguish legislation, judgments/decisions, authority guidance/recommendations, agreed contracts and exact licenses. Record the version and operative provision, effective and applicability dates, retrieval date and access/currency limitations.
+
+| Source ID | Issuer and source type | Document, version and exact provision/clause | Effective/applicable dates | Official URL, retrieval date and verification limits |
+| --- | --- | --- | --- | --- |
+| <ID> | <issuer; binding rule, guidance, contract or license> | <text actually checked, or unavailable> | <dates and transition notes> | <source and access status> |
+
+### Applicability and verification
+
+Use `Applies`, `Does not apply` or `Undetermined` for applicability, with facts, exceptions and source references. Use `Supported`, `Gap`, `Not verified` or `Needs interpretation` for verification; a justified `Does not apply` uses a dash instead. `Supported` covers only the specific inspected obligation. A `Gap` requires a verified applicable rule and project evidence; an interpretation question is not a confirmed violation.
+
+| Candidate obligation and source IDs | Applicability and reasoning | Verification | Project evidence and limits | Finding ID or focused next step |
+| --- | --- | --- | --- | --- |
+| <requirement and exact provision> | <status, relevant facts and exception reasoning> | <status or dash> | <code, UI, document, process or missing evidence> | <LEG-ID, evidence request or interpretation question> |
+
+### Prioritized launch actions and unresolved questions
+
+For each active finding, connect source -> applicability -> evidence -> action -> verification. Keep statutory duties, contractual duties and recommendations distinct. The generic `Confirmed`/`Suspected` status describes supported facts, not certification of legal compliance. Identify the exact question and missing facts for any material interpretation issue, and obtain focused clarification where needed rather than a blanket referral for every routine item.
+
+| Finding or question | Launch impact and priority | Smallest justified action or clarification | Required evidence and verification |
+| --- | --- | --- | --- |
+| <LEG-ID or unresolved question> | <impact, confidence and dependent conclusions> | <action, precise question and owner if known> | <source/fact needed and follow-up check> |
 
 ## Previous findings
 

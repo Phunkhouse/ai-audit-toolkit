@@ -47,3 +47,14 @@ Fill in only information that cannot be reliably inferred from the current repos
 - Current usage/billing evidence, shared account allowances and sources that can be accessed safely:
 - Growth horizon, expected operation mix, peak load and data retention assumptions:
 - Delivery/recovery requirements, operator capacity and acceptable migration effort or downtime:
+
+## Legal readiness context (for legal audits)
+
+Prefill from evidence and ask only for material missing facts. Keep full contracts, credentials and production personal data outside this context file.
+
+- Operator identity and establishment, target countries, review/launch date and intended document languages:
+- Audience and business/consumer roles, age restrictions, paid/free/subscription model and relevant data-based monetization:
+- Actual data purposes, retention, messaging and browser tracking, including services configured outside the repository:
+- Suppliers and processing/transfer arrangements, with safe references to relevant agreed versions and evidence:
+- Rights and licenses for code and content, and existing notices, terms, acceptance and consent records:
+- Relevant specialist features or markets, known exclusions, operator statements and unresolved questions:
