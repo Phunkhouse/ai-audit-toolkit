@@ -13,6 +13,7 @@ skills/
   audit-architecture/SKILL.md
   audit-web-quality/SKILL.md
   audit-scalability-cost/SKILL.md
+  audit-legal-readiness/SKILL.md
 references/
   audit-rules.md
   finding-format.md
@@ -21,6 +22,8 @@ references/
   architecture-review.md
   web-quality-review.md
   scalability-cost-review.md
+  legal-review.md
+  legal/cz-eu.md
 profiles/
   frontend.md
   backend.md
@@ -51,11 +54,11 @@ The links point to this local clone. On another device, clone the repository aga
 
 ## Usage
 
-In the project you want to audit, invoke `audit-security`, `audit-correctness`, `audit-production`, `audit-performance`, `audit-architecture`, `audit-web-quality`, or `audit-scalability-cost`. In Claude Code, use `/audit-security`; in Codex, select the Skill or mention `$audit-security`.
+In the project you want to audit, invoke `audit-security`, `audit-correctness`, `audit-production`, `audit-performance`, `audit-architecture`, `audit-web-quality`, `audit-scalability-cost`, or `audit-legal-readiness`. In Claude Code, use `/audit-security`; in Codex, select the Skill or mention `$audit-security`.
 
 The audit first identifies the actual stack and scope. Optionally copy [`templates/project-context.md`](templates/project-context.md) to `docs/audits/context.md` in the audited project and fill in only facts that cannot be reliably derived from its repository. Check that context against the current code.
 
-Store reports in the audited project under `docs/audits/YYYY-MM-DD/` as `security.md`, `correctness.md`, `production.md`, `performance.md`, `architecture.md`, `web-quality.md`, or `scalability-cost.md`. If the target report exists, use the first free `YYYY-MM-DD-2`, `YYYY-MM-DD-3`, etc. directory; never overwrite a previous audit. Check earlier reports in `docs/audits/` and reconcile their findings. The audit may write its report there but must not change application code or project data. Run artifact-producing checks in a disposable copy outside the audited repository. Follow [`templates/report.md`](templates/report.md), including its coverage log, prior finding reconciliation, and `Not verified` table. Record the audited project's Git commit and this toolkit's commit in the report header, and note relevant uncommitted changes. Run `./scripts/validate.sh` to print the toolkit commit and working tree state; if it has no commit yet, write `uncommitted`. Findings must cite concrete evidence and use audit-specific IDs (`SEC-`, `COR-`, `PRD-`, `PERF-`, `ARC-`, `WEB-`, `SCE-`). Keep secrets, personal information, and sensitive production data out of reports.
+Store reports in the audited project under `docs/audits/YYYY-MM-DD/` as `security.md`, `correctness.md`, `production.md`, `performance.md`, `architecture.md`, `web-quality.md`, `scalability-cost.md`, or `legal-readiness.md`. If the target report exists, use the first free `YYYY-MM-DD-2`, `YYYY-MM-DD-3`, etc. directory; never overwrite a previous audit. Check earlier reports in `docs/audits/` and reconcile their findings. The audit may write its report there but must not change application code or project data. Run artifact-producing checks in a disposable copy outside the audited repository. Follow [`templates/report.md`](templates/report.md), including its coverage log, prior finding reconciliation, and `Not verified` table. Record the audited project's Git commit and this toolkit's commit in the report header, and note relevant uncommitted changes. Run `./scripts/validate.sh` to print the toolkit commit and working tree state; if it has no commit yet, write `uncommitted`. Findings must cite concrete evidence and use audit-specific IDs (`SEC-`, `COR-`, `PRD-`, `PERF-`, `ARC-`, `WEB-`, `SCE-`, `LEG-`). Keep secrets, personal information, and sensitive production data out of reports.
 
 Security reports can reveal exploitable issues. For a public audited repository, keep `docs/audits/` private or ignored, or publish the report only after the relevant fixes are in place. Do not commit an unresolved vulnerability report to a public repository.
 
@@ -87,11 +90,19 @@ Follow [`references/scalability-cost-review.md`](references/scalability-cost-rev
 
 The audit reuses performance, architecture, production and security evidence without requiring every other audit to run first. It does not change plans, purchase services, run production load tests or perform migrations. Those actions require separate explicit authorization.
 
+## Legal readiness audits
+
+`audit-legal-readiness` helps small projects identify applicable launch obligations and practical gaps using verified primary sources and actual project evidence. It selects relevant privacy, tracking, marketing, consumer, licensing and supplier checks after establishing operator, audience, markets, business model and review/launch dates. It asks for material missing facts rather than inventing them or applying every checklist item by default.
+
+Follow [`references/legal-review.md`](references/legal-review.md) for source discipline, applicability and verification states. The initial [Czech/EU research profile](references/legal/cz-eu.md) supplies official starting points that must be checked during each audit; it is not a verified current ruleset or a substitute for other countries' applicable rules. Laws, judgments, authority guidance, contracts and licenses are labeled separately, with exact provisions, versions and dates. Unreadable or unverified sources remain explicit gaps.
+
+The optional report section records a primary-source register, applicability/verification matrix and prioritized launch actions or precise interpretation questions. The audit provides no overall legal clearance or guarantee that professional interpretation will never be needed. It does not automatically require lawyer review for routine items, create unnecessary banners or checkboxes, or publish legal documents. Technical and supplier evidence from existing audits is cross-referenced rather than counted twice. Full document drafting and publication are separate tasks.
+
 After pulling a version that adds a Skill, rerun `./scripts/install.sh` to create its links. Existing Skill links continue pointing to their updated files.
 
 ## Current scope
 
-This version covers security, correctness, production readiness, performance, architecture, web quality, and scalability and cost efficiency. Triage can be added after experience with real audits. The toolkit does not fix the application or run intrusive tests.
+This version covers security, correctness, production readiness, performance, architecture, web quality, scalability and cost efficiency, and legal readiness within its stated jurisdiction and topic scope. Triage can be added after experience with real audits. The toolkit does not fix the application or run intrusive tests.
 
 ## Development
 
