@@ -92,6 +92,10 @@ The audit reuses performance, architecture, production and security evidence wit
 
 ## Legal readiness audits
 
+The skill supports **Planning** from a specification and **Pre-launch** verification of the built product. Ask explicitly for Planning after the first specification, before implementation, to obtain source-backed requirements, product decisions and acceptance checks. Use `legal-planning.md` as the report filename in the usual dated audit directory; Pre-launch retains `legal-readiness.md`. Both modes share the `LEG-` ID sequence so later audits can reconcile planned requirements against actual evidence. Missing future implementation is not a current legal violation.
+
+Use a top-tier reasoning model with high reasoning effort or the closest supported equivalent in both modes. Prioritize source verification and completeness over token cost or speed. The skill announces the known setup and warns when a weaker setup is used; it does not claim to change models automatically. Record unknown settings and review limitations. Revisit the planning review when markets, business model, features, suppliers or data uses materially change.
+
 `audit-legal-readiness` helps small projects identify applicable launch obligations and practical gaps using verified primary sources and actual project evidence. It selects relevant privacy, tracking, marketing, consumer, licensing and supplier checks after establishing operator, audience, markets, business model and review/launch dates. It asks for material missing facts rather than inventing them or applying every checklist item by default.
 
 Follow [`references/legal-review.md`](references/legal-review.md) for source discipline, applicability and verification states. The initial [Czech/EU research profile](references/legal/cz-eu.md) supplies official starting points that must be checked during each audit; it is not a verified current ruleset or a substitute for other countries' applicable rules. Laws, judgments, authority guidance, contracts and licenses are labeled separately, with exact provisions, versions and dates. Unreadable or unverified sources remain explicit gaps.
