@@ -4,6 +4,12 @@ Use this method to reduce routine launch work for small websites, applications a
 
 ## Establish facts before selecting obligations
 
+### Planning and pre-launch evidence
+
+In Planning, use the specification and proposed data flows, markets and suppliers as conditional inputs. Distinguish settled decisions from options and unanswered questions. Apply the same primary-source discipline as a launch audit, but do not treat a control that has not been built yet as an observed violation. Use `Not yet assessed` for future fulfillment; missing facts or unreadable sources remain `Not verified`. Describe any supported conflict in the proposed design as a planning risk. Assess applicable dates against the intended launch date and flag any future source checks needed.
+
+Translate relevant obligations into implementation requirements, product decisions and observable acceptance checks, with source IDs and unresolved assumptions. Use finding severity only for supported design risks, not for every planned task. A planning report cannot establish actual launch readiness. In Pre-launch, reconcile these requirements against actual behavior and operational evidence, rechecking sources, changed assumptions and applicability.
+
 Read code, configuration and project documents, then ask only for material missing facts. Record evidence and distinguish operator statements from independently observed behavior. Essential inputs include:
 
 - Operator identity and establishment, target markets and launch/review date; business/consumer users and any relevant age or sector restrictions.

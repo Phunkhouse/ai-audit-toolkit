@@ -110,6 +110,16 @@ Always assess keeping the current setup. Compare only relevant optimizations, el
 
 ## Legal readiness assessment (optional)
 
+For legal reviews, state the mode (`Planning` or `Pre-launch`), specification/revision reviewed, and model/reasoning setting when reliably known (otherwise `Not verified`). Record any model limitation. In Planning, replace launch-verdict framing with planning decisions, omit empty severity counts and release-blocker sections, and use the planning table below. The shared fulfillment statuses below apply to inspected implementation; use `Not yet assessed` for future fulfillment in Planning. Retain the same source and applicability evidence in both modes.
+
+### Planning requirements and decisions (Planning only)
+
+| LEG-ID | Planned facts and applicability reasoning | Source IDs and exact provisions; duty or recommendation | Implementation requirement or decision | Observable acceptance check | Unresolved facts and re-review trigger |
+| --- | --- | --- | --- | --- | --- |
+| <ID> | <settled choice, conditional option or unknown; applicable scope and exceptions> | <verified rule or explicit uncertainty; statutory, contractual or optional> | <focused action or decision> | <future test, walkthrough or evidence; fulfillment not yet assessed> | <missing input and material change requiring reassessment> |
+
+Do not equate this table with completed implementation, publishable legal documents or legal clearance. In Pre-launch, reconcile each earlier requirement using its existing ID and actual evidence; reverify the sources and assumptions.
+
 Include this section for legal readiness audits; omit it for other audits unless relevant. Establish operator, jurisdictions/markets, audience/contract model and the review and target launch dates. Separate observed facts, operator statements, assumptions and missing inputs. List excluded markets/topics and which conclusions they limit. Do not issue an overall compliance score or unrestricted legal clearance.
 
 ### Primary-source register
