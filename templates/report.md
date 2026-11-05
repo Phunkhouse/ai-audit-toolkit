@@ -79,6 +79,8 @@ Use the performance measurement section for relevant numeric metrics and compara
 
 ## Scalability and cost assessment (optional)
 
+State the mode (`Planning` or `Audit`) and specification/revision reviewed. In Planning, keep this section short and adapt the scenario table to expected initial operation and a relevant peak; add 10x/100x only when decision-relevant. Replace observed-usage cells with explicit assumptions or `Not verified`, never invented measurements. Include the proposed minimal setup, monitoring, justified action triggers and missing inputs; omit empty severity/release-blocker sections. Planning decisions are not verified capacity. Audit reconciles earlier planning requirements and triggers using continuing `SCE-` IDs and real evidence.
+
 Include this section for scalability and cost audits; omit it for other audits unless relevant. Separate observed usage from estimates and unverified inputs. Record budget, currency, observation period, forecast horizon and any tax or currency-conversion assumptions. Never use zero as a substitute for missing usage or billing evidence.
 
 ### Resource, quota and terms register

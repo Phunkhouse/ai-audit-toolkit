@@ -2,6 +2,12 @@
 
 Assess the smallest setup that satisfies the project's actual capacity, budget, reliability, security and permitted-use requirements. Select checks for the detected stack; no hosting model, provider, paid service or architectural style is required.
 
+## Planning and Audit
+
+Planning supports specification-based decisions before telemetry exists. Keep workload assumptions, proposed suppliers, unknown inputs and any existing measurements visibly separate. Select expected initial operation and a relevant peak over a stated horizon; add growth scenarios only if they inform a current choice. Prefer a short report that recommends the smallest sufficient setup and identifies monitoring/action triggers. Missing future implementation is not a current operational failure. In Audit, reconcile the earlier planning report with observed operation and reverify prices, limits and terms. Both modes share the source discipline and authorization boundaries below.
+
+Include material development-operation costs such as CI, builds, preview environments and artifact retention. Coordinate with CI strategy and existing legal/supplier evidence without double-counting shared costs or weakening quality, security or recovery requirements.
+
 ## Baseline and requirements
 
 Inventory hosting, databases, storage, delivery networks, email, external APIs, model calls and background processing, including local hardware. Trace critical operations to their resource consumption. Use available telemetry, billing records and configuration; record the observation period, environment and source. Code alone cannot establish traffic, an account's selected plan or its remaining quota.
@@ -33,7 +39,7 @@ If official sources or account details cannot be verified, keep estimates condit
 
 ## Growth and cost model
 
-Always include the observed current state and 10x/100x workload scenarios over a defined period. State which drivers grow: requests, concurrency, uploads, stored items, jobs or messages. A user-count multiplier alone is not a workload model. Separate sustained growth from bursts and include retention horizons for accumulating data.
+In Audit, include the observed current state and 10x/100x workload scenarios over a defined period. In Planning, use expected initial operation and a relevant peak, with optional decision-relevant growth scenarios; the lack of historical traffic does not require a fictional observed baseline. State which drivers grow: requests, concurrency, uploads, stored items, jobs or messages. A user-count multiplier alone is not a workload model. Separate sustained growth from bursts and include retention horizons for accumulating data.
 
 Show the equations and input sources. For a simple eligible overage dimension, consumption may be estimated as operation count multiplied by units per operation; billable usage may then be the positive excess above its allowance. Apply the actual provider's billing units, rounding and rate schedule. This simplification does not apply unchanged to tiered rates, shared quotas, minimum commitments, storage-time billing or plans that stop service at a hard limit.
 
@@ -43,7 +49,7 @@ For each scenario, identify the first limit and resulting behavior, forecast cos
 
 ## Options and action triggers
 
-Include **keep the current setup** as the baseline. Compare only relevant alternatives: remove unnecessary work, adjust retention or resource settings, use an eligible plan adjustment, then consider a provider or architecture change where justified. Do not assume an upgrade is more economical than migration or the reverse.
+In Audit or an existing project, include **keep the current setup** as the baseline. For a new project, start with the smallest setup that could satisfy the stated requirements. Compare only relevant alternatives: remove unnecessary work, adjust retention or resource settings, use an eligible plan adjustment, then consider a provider or architecture change where justified. Do not assume an upgrade is more economical than migration or the reverse.
 
 Compare ongoing cash costs, operator effort, migration expense, transition overlap and operational risks over the same horizon. Consider export/import, egress, proprietary APIs, data compatibility, downtime, rollback and ownership for exit planning. Lock-in alone does not justify abstraction layers or a migration. Record unpriced effort and uncertainty rather than inventing precise savings or payback.
 
