@@ -48,6 +48,15 @@ Fill in only information that cannot be reliably inferred from the current repos
 - Growth horizon, expected operation mix, peak load and data retention assumptions:
 - Delivery/recovery requirements, operator capacity and acceptable migration effort or downtime:
 
+## Test and CI context (optional)
+
+- Critical regression risks, required suites, supported environments and accepted detection delay, with requirement/decision sources:
+- Merge/deployment process, CI strategy and actual protection/ruleset evidence not available in the repository:
+- Representative CI/test reports, first-attempt failures/retries, queue/setup durations and observation window:
+- Feedback targets, available compute/billing evidence, account allowance scope and operator maintenance constraints:
+- Runner ownership, shared-host workloads/port assignments, trust boundaries and verified recovery/fallback process:
+- Available isolated test services and permitted local run/resource budgets (without credentials):
+
 ## Legal readiness context (for legal audits)
 
 Prefill from evidence and ask only for material missing facts. Keep full contracts, credentials and production personal data outside this context file.

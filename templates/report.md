@@ -41,7 +41,7 @@ Record relevant decision rationale, constraints and accepted tradeoffs with sour
 
 ## Findings
 
-Use `SEC-001`, `COR-001`, `PRD-001`, `PERF-001`, `ARC-001`, `WEB-001`, `SCE-001` or `LEG-001` according to the audit type for a first audit. In repeat audits, preserve a prior ID for the same issue and use the next number not previously assigned for each new issue. For every finding, use the fields in `references/finding-format.md`.
+Use `SEC-001`, `COR-001`, `PRD-001`, `PERF-001`, `ARC-001`, `WEB-001`, `SCE-001`, `LEG-001` or `TCI-001` according to the audit type for a first audit. In repeat audits, preserve a prior ID for the same issue and use the next number not previously assigned for each new issue. For every finding, use the fields in `references/finding-format.md`.
 
 ### <PREFIX>-001: <Short description>
 
@@ -109,6 +109,38 @@ Always assess keeping the current setup. Compare only relevant optimizations, el
 | --- | --- | --- | --- | --- |
 | Keep current setup | <adequate, conditional or insufficient with evidence> | <cost and requirement assessment> | <revisit condition> | <measurement or review step> |
 | <optimization, plan change or migration> | <act now, prepare or defer and why> | <estimated impact with assumptions and uncertainty> | <signal, justified threshold and window> | <concrete action, owner if known, and validation> |
+
+## Test and CI assessment (optional)
+
+Include for test/CI efficiency audits. Keep the scope proportional and omit inapplicable categories. Describe the current test architecture and CI execution architecture, including trigger/job dependencies, invoked scripts, services and observed merge/deployment gates. Include separate current/proposed Mermaid flows when supported by evidence; label inferred links and proposed changes. Assess infrastructure options against the current setup, including security, shared-host contention, total cost, maintenance and actual fallback behavior. Record inspected optional starter-pack recipe revisions and applicability if used.
+
+### Risk coverage and proposed suite boundaries
+
+Use this as both an inventory and a risk-to-gate map. Distinguish observed from proposed coverage, and list sampled/skipped suites in the coverage log. Do not infer equivalent protection from coverage percentages or similar test names.
+
+| Protected behavior or failure risk | Existing tests/layer and actual boundary exercised | Current merge/deployment gate and evidence | Proposed smoke/regression membership and change triggers | Required boundary, detection delay and coverage retained |
+| --- | --- | --- | --- | --- |
+| <risk and requirement source> | <suite/assertions, real integration or mock> | <gate, revision/run/rule or not verified> | <keep or proposed assignment with reason> | <what blocks release, timing and equivalent protection> |
+
+### Baseline, bottlenecks and measurement plan
+
+Record observation window, timestamps, commands/data sources, event/tested revision, tool/runtime versions, runner OS/architecture/resources, data, worker count, cache state, sample count, variability, failures and sampling limits. Separate queue/setup/execution/reporting, critical path, runner-minutes, CPU/memory, billing and maintenance; overlapping job times do not sum to wall-clock time. Include retries/cancellations and run frequency without double counting. Cost estimates need dated official rates, billing units and account/allowance evidence; missing inputs stay unknown.
+
+| Stage, suite or metric | Evidence basis and source | Observed result, unit and variability | Comparable baseline/target and source | Missing measurement and bounded validation plan |
+| --- | --- | --- | --- | --- |
+| <queue, setup, job, test, retry rate, cost or maintenance> | <measured, code-proven, estimated or hypothesis; artifact> | <value with sample/window, or not verified> | <requirement or comparable run, or unavailable> | <scenario/command, metrics, run/resource budget, stop condition and acceptance basis> |
+
+Explain test inefficiencies, coverage risks and the actual critical path using this evidence. Separate first-attempt failures and retry recoveries from confirmed flaky-test causes. Do not present proposed experiments as completed checks or estimated savings as measured results.
+
+### Prioritized optimization backlog
+
+Group rows as quick wins, test/CI architecture or infrastructure improvements. Each finding holds the observation, precise location, evidence/counter-evidence and realistic impact; reference its ID here. Priority reflects expected value and effort, independently of severity and concrete release-blocking impact.
+
+| Finding ID, category and priority | Proposed change | Expected benefit by dimension and confidence | Coverage/security/reliability risk and effort | Validation and rollback |
+| --- | --- | --- | --- | --- |
+| <TCI-ID; category; act now/prepare/defer and why> | <smallest meaningful change> | <feedback; compute/cost; reliability; maintenance; measured/estimated basis and High/Medium/Low confidence> | <risk and safeguards; Low/Medium/High effort> | <prove efficiency and retained gates/coverage; restore configuration and required outcomes safely> |
+
+Record keeping the setup and considered options not recommended or deferred, with evidence and reasons. Present the backlog for review before a separate implementation plan; do not modify tests, gates, workflows or runner infrastructure during the audit. Put unavailable settings, measurements and unresolved requirements in `Not verified` with practical next steps.
 
 ## Legal readiness assessment (optional)
 

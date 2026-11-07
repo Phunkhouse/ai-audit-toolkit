@@ -14,6 +14,7 @@ skills/
   audit-web-quality/SKILL.md
   audit-scalability-cost/SKILL.md
   audit-legal-readiness/SKILL.md
+  audit-test-ci/SKILL.md
 references/
   audit-rules.md
   finding-format.md
@@ -24,6 +25,7 @@ references/
   scalability-cost-review.md
   legal-review.md
   legal/cz-eu.md
+  test-ci-review.md
 profiles/
   frontend.md
   backend.md
@@ -54,11 +56,11 @@ The links point to this local clone. On another device, clone the repository aga
 
 ## Usage
 
-In the project you want to audit, invoke `audit-security`, `audit-correctness`, `audit-production`, `audit-performance`, `audit-architecture`, `audit-web-quality`, `audit-scalability-cost`, or `audit-legal-readiness`. In Claude Code, use `/audit-security`; in Codex, select the Skill or mention `$audit-security`.
+In the project you want to audit, invoke `audit-security`, `audit-correctness`, `audit-production`, `audit-performance`, `audit-architecture`, `audit-web-quality`, `audit-scalability-cost`, `audit-legal-readiness`, or `audit-test-ci`. In Claude Code, use `/audit-security`; in Codex, select the Skill or mention `$audit-security`.
 
 The audit first identifies the actual stack and scope. Optionally copy [`templates/project-context.md`](templates/project-context.md) to `docs/audits/context.md` in the audited project and fill in only facts that cannot be reliably derived from its repository. Check that context against the current code.
 
-Store reports in the audited project under `docs/audits/YYYY-MM-DD/` as `security.md`, `correctness.md`, `production.md`, `performance.md`, `architecture.md`, `web-quality.md`, `scalability-cost.md`, or `legal-readiness.md`. If the target report exists, use the first free `YYYY-MM-DD-2`, `YYYY-MM-DD-3`, etc. directory; never overwrite a previous audit. Check earlier reports in `docs/audits/` and reconcile their findings. The audit may write its report there but must not change application code or project data. Run artifact-producing checks in a disposable copy outside the audited repository. Follow [`templates/report.md`](templates/report.md), including its coverage log, prior finding reconciliation, and `Not verified` table. Record the audited project's Git commit and this toolkit's commit in the report header, and note relevant uncommitted changes. Run `./scripts/validate.sh` to print the toolkit commit and working tree state; if it has no commit yet, write `uncommitted`. Findings must cite concrete evidence and use audit-specific IDs (`SEC-`, `COR-`, `PRD-`, `PERF-`, `ARC-`, `WEB-`, `SCE-`, `LEG-`). Keep secrets, personal information, and sensitive production data out of reports.
+Store reports in the audited project under `docs/audits/YYYY-MM-DD/` as `security.md`, `correctness.md`, `production.md`, `performance.md`, `architecture.md`, `web-quality.md`, `scalability-cost.md`, `legal-readiness.md`, or `test-ci.md`. If the target report exists, use the first free `YYYY-MM-DD-2`, `YYYY-MM-DD-3`, etc. directory; never overwrite a previous audit. Check earlier reports in `docs/audits/` and reconcile their findings. The audit may write its report there but must not change application code or project data. Run artifact-producing checks in a disposable copy outside the audited repository. Follow [`templates/report.md`](templates/report.md), including its coverage log, prior finding reconciliation, and `Not verified` table. Record the audited project's Git commit and this toolkit's commit in the report header, and note relevant uncommitted changes. Run `./scripts/validate.sh` to print the toolkit commit and working tree state; if it has no commit yet, write `uncommitted`. Findings must cite concrete evidence and use audit-specific IDs (`SEC-`, `COR-`, `PRD-`, `PERF-`, `ARC-`, `WEB-`, `SCE-`, `LEG-`, `TCI-`). Keep secrets, personal information, and sensitive production data out of reports.
 
 Security reports can reveal exploitable issues. For a public audited repository, keep `docs/audits/` private or ignored, or publish the report only after the relevant fixes are in place. Do not commit an unresolved vulnerability report to a public repository.
 
@@ -104,11 +106,21 @@ Follow [`references/legal-review.md`](references/legal-review.md) for source dis
 
 The optional report section records a primary-source register, applicability/verification matrix and prioritized launch actions or precise interpretation questions. The audit provides no overall legal clearance or guarantee that professional interpretation will never be needed. It does not automatically require lawyer review for routine items, create unnecessary banners or checkboxes, or publish legal documents. Technical and supplier evidence from existing audits is cross-referenced rather than counted twice. Full document drafting and publication are separate tasks.
 
+## Test and CI efficiency audits
+
+`audit-test-ci` reviews test architecture, E2E setup and execution, CI triggers and critical paths, quality gates and runner infrastructure. It seeks faster feedback, lower compute/cost, fewer unreliable failures and less maintenance while preserving meaningful regression coverage and security. Its infrastructure scope is development and CI execution; related performance, production, architecture and scalability findings are cross-referenced.
+
+Follow [`references/test-ci-review.md`](references/test-ci-review.md) for risk-to-test/gate mapping, reproducible measurements, safe execution, smoke/regression assignment and infrastructure comparisons. The optional report section records current architecture, observed run conditions, proposed gates and a prioritized backlog with benefit, risk, effort, validation and rollback. Reports use `test-ci.md` and `TCI-` IDs. Queue time, elapsed execution, runner-minutes, resource usage, billable cost and maintenance are separate dimensions; estimates and unknowns remain explicit. A slower test is not automatically optional, and a green or skipped check is not proof that required tests ran.
+
+The skill can review code and existing evidence without running tests. It does not dispatch cloud runs, weaken gates, install dependencies in the audited repository, provision runners or change workflows. Any useful local experiments stay bounded and isolated outside the repository; cloud reruns and billable experiments need separate authorization. Keeping the current setup is a valid recommendation.
+
+The [AI starter pack](https://github.com/Phunkhouse/ai-starter-pack) is optional: its CI strategy, Playwright and self-hosted runner recipes are candidate implementations to assess against the project and the inspected recipe revision. No recipe, framework, scheduling policy or provider is imposed. Use the audit when a real suite/CI setup exists, feedback or compute becomes costly, failures recur or runner changes are being considered; a full review is not required for every project bootstrap. Starter-pack integration can be maintained separately without duplicating this audit method.
+
 After pulling a version that adds a Skill, rerun `./scripts/install.sh` to create its links. Existing Skill links continue pointing to their updated files.
 
 ## Current scope
 
-This version covers security, correctness, production readiness, performance, architecture, web quality, scalability and cost efficiency, and legal readiness within its stated jurisdiction and topic scope. Triage can be added after experience with real audits. The toolkit does not fix the application or run intrusive tests.
+This version covers security, correctness, production readiness, performance, architecture, web quality, scalability and cost efficiency, legal readiness within its stated jurisdiction and topic scope, and test/CI efficiency. Triage can be added after experience with real audits. The toolkit does not fix the application or run intrusive tests.
 
 ## Development
 
