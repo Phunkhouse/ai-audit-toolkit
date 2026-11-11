@@ -50,11 +50,13 @@ Fill in only information that cannot be reliably inferred from the current repos
 
 ## Test and CI context (optional)
 
+- Optimization objective and priority among feedback, resource consumption, billed cost, reliability and maintenance; changes since earlier reviews:
 - Critical regression risks, required suites, supported environments and accepted detection delay, with requirement/decision sources:
 - Merge/deployment process, CI strategy and actual protection/ruleset evidence not available in the repository:
 - Representative CI/test reports, first-attempt failures/retries, queue/setup durations and observation window:
 - Feedback targets, available compute/billing evidence, account allowance scope and operator maintenance constraints:
 - Runner ownership, shared-host workloads/port assignments, trust boundaries and verified recovery/fallback process:
+- Effective CPU/memory constraints, observed worker counts and cache persistence/cleanup details unavailable from repository evidence:
 - Available isolated test services and permitted local run/resource budgets (without credentials):
 
 ## Legal readiness context (for legal audits)
