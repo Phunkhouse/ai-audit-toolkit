@@ -114,6 +114,16 @@ Always assess keeping the current setup. Compare only relevant optimizations, el
 
 Include for test/CI efficiency audits. Keep the scope proportional and omit inapplicable categories. Describe the current test architecture and CI execution architecture, including trigger/job dependencies, invoked scripts, services and observed merge/deployment gates. Include separate current/proposed Mermaid flows when supported by evidence; label inferred links and proposed changes. Assess infrastructure options against the current setup, including security, shared-host contention, total cost, maintenance and actual fallback behavior. Record inspected optional starter-pack recipe revisions and applicability if used.
 
+State the optimization objective and relative priorities, including any change since the previous audit. Record CI scheduling strategy separately from runner placement and execution improvements. Standard and Budget-conscious can both benefit without changing their required checks or scheduling policy.
+
+### Execution conditions
+
+Record applicable constraints and evidence; unknown inputs stay explicit. A provider's advertised resources, nominal worker setting or cache directory does not establish effective runtime behavior.
+
+| Phase/project | Effective CPU/memory limits and competing jobs | Tool version and configured/observed workers | Cache type, location, state and invalidation | Selected/passed/failed/skipped tests and evidence |
+| --- | --- | --- | --- | --- |
+| <phase or suite> | <process/container limits and telemetry, or unknown> | <installed version, overrides and actual count> | <cold/warm; persistence/cleanup and trust scope> | <counts, important assertions and comparison limits> |
+
 ### Risk coverage and proposed suite boundaries
 
 Use this as both an inventory and a risk-to-gate map. Distinguish observed from proposed coverage, and list sampled/skipped suites in the coverage log. Do not infer equivalent protection from coverage percentages or similar test names.
@@ -132,6 +142,8 @@ Record observation window, timestamps, commands/data sources, event/tested revis
 
 Explain test inefficiencies, coverage risks and the actual critical path using this evidence. Separate first-attempt failures and retry recoveries from confirmed flaky-test causes. Do not present proposed experiments as completed checks or estimated savings as measured results.
 
+Label each numeric result `measured (CI)`, `measured (local <environment>)` or `estimate`, with its source and interval boundary (workflow, job, full step or tool-only). Compare like cold/warm cohorts and retain cold-start costs. Separate the observed combined change from attributable effects; unrelated phase variation and bundled optimizations do not establish individual contributions. A PR-branch result does not verify a later merged revision, and lower wall time does not establish lower CPU use or billed cost.
+
 ### Prioritized optimization backlog
 
 Group rows as quick wins, test/CI architecture or infrastructure improvements. Each finding holds the observation, precise location, evidence/counter-evidence and realistic impact; reference its ID here. Priority reflects expected value and effort, independently of severity and concrete release-blocking impact.
@@ -141,6 +153,8 @@ Group rows as quick wins, test/CI architecture or infrastructure improvements. E
 | <TCI-ID; category; act now/prepare/defer and why> | <smallest meaningful change> | <feedback; compute/cost; reliability; maintenance; measured/estimated basis and High/Medium/Low confidence> | <risk and safeguards; Low/Medium/High effort> | <prove efficiency and retained gates/coverage; restore configuration and required outcomes safely> |
 
 Record keeping the setup and considered options not recommended or deferred, with evidence and reasons. Present the backlog for review before a separate implementation plan; do not modify tests, gates, workflows or runner infrastructure during the audit. Put unavailable settings, measurements and unresolved requirements in `Not verified` with practical next steps.
+
+On repeat audits, compare expected benefit with observed results under the stated objective. Preserve earlier findings/evidence and explain revised priorities, changed objectives, implementation status, measurement limits and retained coverage. Do not present an implemented optimization as independently measured when only a bundled CI result exists.
 
 ## Legal readiness assessment (optional)
 

@@ -37,6 +37,8 @@ For legal readiness findings, include the exact source/provision and relevant le
 
 For test/CI findings, label measured results, code-proven mechanisms, conditional estimates and hypotheses separately. Include the protected risk, affected suite/job/gate, relevant revision/event/run conditions and counter-evidence. State expected benefit independently for feedback, compute/cost, reliability and maintenance, plus confidence, coverage/security risk, effort, validation and rollback. Quantified savings need comparable measurements or explicit equations and assumptions; a proven mechanism alone does not establish its runtime cost. Use `test-ci-review.md` and keep optimization priority separate from severity or release-blocking impact. Link backlog rows to findings and cross-reference shared causes from other audits.
 
+For numeric test/CI results, identify CI versus a named local environment versus an estimate, interval boundaries, effective workers/resources, cold/warm state and selected/skipped coverage. State attribution limits and the optimization objective. Preserve earlier evidence when a changed objective or later measurements revise a recommendation; implemented code and verified CI behavior are separate claims.
+
 ## Conclusion
 
 Separate confirmed release blockers, other findings, and `Not verified` areas. Record coverage and skipped areas. For repeat audits, reconcile prior findings as fixed, still open, regressed or not verified, with evidence. For checks without findings, describe what was actually examined; do not claim the audit was exhaustive.
