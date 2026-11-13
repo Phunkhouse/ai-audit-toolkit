@@ -39,6 +39,8 @@ For test/CI findings, label measured results, code-proven mechanisms, conditiona
 
 For numeric test/CI results, identify CI versus a named local environment versus an estimate, interval boundaries, effective workers/resources, cold/warm state and selected/skipped coverage. State attribution limits and the optimization objective. Preserve earlier evidence when a changed objective or later measurements revise a recommendation; implemented code and verified CI behavior are separate claims.
 
+For resource-efficiency findings across scalability/cost, performance, production and correctness, identify the producer, environment/revision, frequency, cache/change contract and affected requirement. Use `resource-efficiency.md` to distinguish no-visitor work, overlapping active time, amplified calls, rows and actual transfer. Quantified monthly/quota impact needs explicit inputs, units, horizon, dated service/account evidence and confidence; missing inputs stay unverified. Record the smallest fix, correctness/freshness constraints, the optimization's own work, monitoring trigger and isolated verification. Keep the current audit's ID sequence and cross-reference shared causes. Correctness-only findings need behavioral evidence, not a compulsory cost forecast.
+
 ## Conclusion
 
 Separate confirmed release blockers, other findings, and `Not verified` areas. Record coverage and skipped areas. For repeat audits, reconcile prior findings as fixed, still open, regressed or not verified, with evidence. For checks without findings, describe what was actually examined; do not claim the audit was exhaustive.

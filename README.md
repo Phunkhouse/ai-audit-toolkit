@@ -23,6 +23,7 @@ references/
   architecture-review.md
   web-quality-review.md
   scalability-cost-review.md
+  resource-efficiency.md
   legal-review.md
   legal/cz-eu.md
   test-ci-review.md
@@ -69,6 +70,14 @@ Security reports can reveal exploitable issues. For a public audited repository,
 `audit-performance` reviews critical flows for latency, throughput, resource use and operating cost. It uses applicable frontend, backend, database, infrastructure and AI/LLM profiles. It can work from code and existing evidence when measurements are unavailable, with runtime impact explicitly marked unverified.
 
 Follow [`references/performance-measurement.md`](references/performance-measurement.md) for representative workloads, comparable baselines, safe execution and measurement records. The optional section in the report template records benchmark conditions and results. Production load tests and billable external experiments require separate explicit authorization.
+
+## Resource efficiency before launch and in operation
+
+Four existing audits share [`references/resource-efficiency.md`](references/resource-efficiency.md): `audit-scalability-cost` owns resource/quota modeling and action triggers; `audit-performance` traces repeated work and transfer; `audit-production` applies relevant pre-launch checks and monitoring readiness; `audit-correctness` checks cache/change-detection behavior. No new Skill or report filename is required, and running one audit does not require all the others. Shared root causes are cross-referenced using the existing finding IDs.
+
+For metered services, scheduled work or material cache reuse, inventory non-user producers as well as user journeys. Assess no-visitor operation, expected use and cold-cache/invalidation/failure behavior, including shared preview/standby consumers. Model joint activation/idle periods, actual cache scope, query/call and transfer amplification, and the added cost of fingerprints or other optimizations. Preserve freshness, deletions/withdrawals and user isolation. Provider settings, limits and billing semantics are verified per audit rather than embedded as universal constants.
+
+Planning uses explicit proposed workloads. Built pre-launch code can expose a waste mechanism before traffic exists, but live deployment, account headroom and savings remain unverified without evidence. The optional report/context sections capture producers, scenario assumptions, cache/change contracts and monitoring/action triggers. A missing measurement is not a passing check or an automatic release blocker. Reviews use existing evidence or bounded isolated checks; they do not authorize production SQL, extension installation, statistics resets or monitoring changes.
 
 ## Architecture audits
 

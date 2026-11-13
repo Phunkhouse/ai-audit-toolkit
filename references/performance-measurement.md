@@ -39,6 +39,8 @@ Prioritize findings using the frequency and importance of the affected flow, rea
 
 ## Metric selection
 
+For background-driven or metered work, also use [resource-efficiency.md](resource-efficiency.md). Include no-visitor and cold-cache/invalidation scenarios where relevant, trace repeated work across actual cache instances and evaluate the optimization's own cost. A short query can prolong active service time; query duration, call/row counts, transferred bytes and billable usage require separate evidence.
+
 - Frontend: loading, interactivity, rendering work, transferred bytes and request waterfalls. Distinguish lab observations from field Web Vitals.
 - Services: latency distributions, successful throughput, errors, CPU, memory, I/O and saturation of limited resources.
 - Databases: query count, execution plans, rows processed, lock waits and pool utilization at representative data volumes.
