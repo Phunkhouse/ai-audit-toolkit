@@ -31,6 +31,8 @@ If official sources or account details cannot be verified, keep estimates condit
 
 ## Capacity and reliability
 
+For metered, scheduled or cache-dependent work, apply [resource-efficiency.md](resource-efficiency.md) in either mode. Include the no-visitor baseline, material producers across shared environments, joint active-time intervals and cold-cache/invalidation/failure amplification. Preserve freshness and data isolation while comparing savings with the added cost of fingerprints or other avoidance mechanisms. Static pre-launch findings can identify mechanisms without inventing live usage or post-release savings; monitoring itself must not defeat idle behavior.
+
 - Identify the first constraint on critical paths: request or execution limits, CPU/memory, database size, query work, connections, network/transfer, external API limits or job processing rate. Use measured evidence where available and `performance-measurement.md` for safe interpretation.
 - Examine bounded work, cache reuse and invalidation, batching, deduplication, polling and retries. Evaluate optimization against actual repeated work; preserve correctness, permissions and freshness.
 - For jobs, compare arrivals, processing capacity, peak backlog and maximum acceptable age. Inspect durable storage, restart/replay behavior, idempotency and dependency failures before recommending a queue service.

@@ -48,6 +48,14 @@ Fill in only information that cannot be reliably inferred from the current repos
 - Growth horizon, expected operation mix, peak load and data retention assumptions:
 - Delivery/recovery requirements, operator capacity and acceptable migration effort or downtime:
 
+## Resource efficiency context (when relevant)
+
+- Metered/shared service scope and verified activation, idle, minimum-capacity and quota/reset settings unavailable from repository evidence:
+- Enabled background schedules/time zones, monitoring, preview/standby/build consumers and actual deployed revisions:
+- Expected no-visitor operation, traffic/data assumptions and acceptable job response/freshness delays, including deletion/withdrawal requirements:
+- Actual cache handlers/sharing boundaries and available query/call, active-time, transfer and cache/fallback evidence with observation/reset windows:
+- Existing monitoring owner/cadence, remaining-headroom evidence and justified action thresholds; safe references only, no credentials or personal query values:
+
 ## Test and CI context (optional)
 
 - Optimization objective and priority among feedback, resource consumption, billed cost, reliability and maintenance; changes since earlier reviews:
