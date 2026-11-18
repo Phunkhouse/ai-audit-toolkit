@@ -148,6 +148,8 @@ State the optimization objective and relative priorities, including any change s
 
 Record applicable constraints and evidence; unknown inputs stay explicit. A provider's advertised resources, nominal worker setting or cache directory does not establish effective runtime behavior.
 
+For scheduling bottlenecks, record schedulable units, project dependencies/limits and worker occupancy/idle tails with timestamp evidence and missing overhead. Separate scheduling bounds from resource saturation. Describe retry/restart scope, repeated passing work and setup costs; distinguish successful-run duration from failure-path amplification and its observed frequency.
+
 | Phase/project | Effective CPU/memory limits and competing jobs | Tool version and configured/observed workers | Cache type, location, state and invalidation | Selected/passed/failed/skipped tests and evidence |
 | --- | --- | --- | --- | --- |
 | <phase or suite> | <process/container limits and telemetry, or unknown> | <installed version, overrides and actual count> | <cold/warm; persistence/cleanup and trust scope> | <counts, important assertions and comparison limits> |
@@ -155,6 +157,8 @@ Record applicable constraints and evidence; unknown inputs stay explicit. A prov
 ### Risk coverage and proposed suite boundaries
 
 Use this as both an inventory and a risk-to-gate map. Distinguish observed from proposed coverage, and list sampled/skipped suites in the coverage log. Do not infer equivalent protection from coverage percentages or similar test names.
+
+Compare relevant assertions, scenarios, roles, states, browsers/devices and viewports before and after. Record removed matrix cases and any owner-approved tradeoffs even if other checks remain; test counts alone do not establish unchanged coverage.
 
 | Protected behavior or failure risk | Existing tests/layer and actual boundary exercised | Current merge/deployment gate and evidence | Proposed smoke/regression membership and change triggers | Required boundary, detection delay and coverage retained |
 | --- | --- | --- | --- | --- |
@@ -171,6 +175,16 @@ Record observation window, timestamps, commands/data sources, event/tested revis
 Explain test inefficiencies, coverage risks and the actual critical path using this evidence. Separate first-attempt failures and retry recoveries from confirmed flaky-test causes. Do not present proposed experiments as completed checks or estimated savings as measured results.
 
 Label each numeric result `measured (CI)`, `measured (local <environment>)` or `estimate`, with its source and interval boundary (workflow, job, full step or tool-only). Compare like cold/warm cohorts and retain cold-start costs. Separate the observed combined change from attributable effects; unrelated phase variation and bundled optimizations do not establish individual contributions. A PR-branch result does not verify a later merged revision, and lower wall time does not establish lower CPU use or billed cost.
+
+### Predicted versus observed
+
+Use for follow-up evidence; omit if no change has been evaluated. Keep dated earlier evidence and canonical finding/reconciliation status. Distinguish implementation, one observed run and repeated validation. A baseline median compared with one after-change run does not establish a new stable median; a confirmed scheduling bottleneck does not confirm the projected gain from its remedy.
+
+| Finding/change and metric | Original prediction and baseline | Observed result and evidence | Coverage/condition changes and attribution limits | Validation evidence and next check |
+| --- | --- | --- | --- | --- |
+| <TCI-ID; job, phase, failure-path cost or other metric> | <estimate, assumptions, baseline cohort/window, samples and revision> | <CI/local origin, result/unit, variability, sample count, revision and source> | <assertions/matrix delta, cache/runner conditions, bundled effects and missing telemetry> | <implemented/observed/repeatedly validated evidence; remaining bounded check> |
+
+Recompute the current critical path and remaining estimates after material changes. Explain whether new runner, suite or objective evidence warrants revisiting a rejected option; preserve and label superseded local trials. One green run without retries does not establish unchanged flakiness.
 
 ### Prioritized optimization backlog
 
