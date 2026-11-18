@@ -19,9 +19,13 @@ For each material producer record source location, intended behavior/deadline, e
 
 Explicitly assess **no visitor traffic**, representative expected use and **cold-cache/invalidation/failure** behavior when relevant. In Planning these are bounded assumptions, not observed operation; do not invent a baseline or run a load test. A permanently active resource driven by background work can be a pre-launch risk independent of audience size.
 
+Separate zero external requests from no human visitors: crawlers and monitoring can dominate off-hours demand. Reconcile visits, HTTP requests, function invocations and actual service calls over matching windows; their ratio alone does not identify bots or database work. Attribute relevant routes, first-render/cache behavior and automated demand using existing evidence or explicit assumptions. User-agent labels describe claimed traffic classes, not verified identity or an authorization boundary.
+
 ## Model active time and quota consumption
 
 Verify current official service semantics and applicable account settings: what activates it, what counts as activity, the idle tail, minimum capacity, autoscaling, rounding, reset window and hard-stop versus paid-overage behavior. Do not embed a universal suspend interval or infer a free plan from a driver. Check idle transactions, health/pool checks, connection attempts and provider maintenance where relevant; ordinary idle connections are not universally proof that compute stays active.
+
+Record the configured capacity minimum and maximum and, where available, the allocation history during builds, background passes and cache rebuilds. An estimated minimum is not account configuration or observed average capacity. Reconcile earlier forecasts when that assumption was wrong. Evaluate any proposed capacity cap against total capacity-time, duration, memory, failures and delivery requirements; do not prescribe the smallest fixed size merely because it saved resources in another workload.
 
 For a fixed-capacity service with an applicable idle tail, a conditional approximation is:
 
@@ -34,11 +38,17 @@ Merge intervals from all producers for the same endpoint before charging active 
 
 Show inputs, equations, units, horizon, ranges, source dates and confidence. Where meaningful, estimate monthly impact or usage until the next reset, with remaining shared quota and justified reserve. Mark unknown traffic, enabled schedules, account settings or prices `Not verified`; do not substitute zero or turn a projection into measured savings. Keep no-visitor fixed work separate from traffic- and dataset-driven growth and avoid double counting them.
 
+When usage evidence exists, choose a recent observation window that represents the relevant schedules and demand; a fixed seven-day window is not mandatory. Segment material configuration, release and workload changes rather than averaging away their effects. Identify feasible responses before exhaustion while preserving required behavior. An eligible paid option is conditional, not the required fallback: verify billing-period costs, allowance treatment and upgrade/reset rules instead of assuming prorating or renewed quota. Label forecasts and missing post-fix measurements explicitly.
+
 ## Trace amplification and transferred data
 
 Follow the full chain from a trigger through invalidation, cache misses, loader calls and service work. Inspect broad refreshes after no-op jobs, repeated reads for multiple windows/locales, unbounded history scans, N+1 work, oversized `SELECT` projections, redundant account/session queries and repeated external calls. Flag a broad query only with evidence that its work is unnecessary or unbounded for the stated requirement.
 
+Map downstream phases too: matching, index rebuilding, delete/reinsert synchronization, aggregate recomputation and summary logging may repeat after every job. Record relevant input dependencies and per-phase calls, reads/writes, duration and no-op frequency where available. A stable-input replay can expose unnecessary work, but explicit requests, partial-failure recovery and required repairs may still justify execution. Do not skip all phases on one coarse fingerprint without checking those contracts.
+
 Establish actual cache scope: request, process/instance, deployment, region, browser or shared store. Verify framework, installed hosting adapter and configured handler behavior; an annotation or nominal TTL does not establish cross-instance reuse. Inspect cold instances, deployments, cache-key cardinality, expiry, tag fan-out and concurrent refreshes. Distinguish request-triggered revalidation from an actual periodic job. Do not multiply every TTL by every instance when no requests cause refreshes.
+
+Quantify material tags or equivalent invalidation groups: affected keys/items, invalidations per window, demand for those keys and actual miss/rebuild counts across cache instances. Invalidating many entries is not evidence that they all rebuild immediately. Consider per-item invalidation only where dependencies support it; shared visible data can still require a shared tag. Preserve removals, time-based freshness and required failure fallback rather than narrowing invalidation blindly.
 
 Evaluate retries, timeout fallbacks and speculative/parallel requests that may duplicate still-running work. Client cancellation need not stop a remote query. Prefer bounded reuse, narrower invalidation, correct projections and deduplication where they meet requirements; shared cache infrastructure or stored responses are options to compare, not mandatory fixes. Include their own function/storage/request costs and failure/freshness behavior.
 
@@ -49,6 +59,8 @@ Separate query calls, rows returned/affected, rows scanned, logical payload size
 For cache keys, fingerprints or change tokens, map the dependencies of actual consumers: fields, joins, derived decisions, deletions, availability/freshness bands, time windows, owner withdrawals and relevant languages/roles/tenants. A narrower refresh is correct only within its documented contract and acceptable delay. Do not require immediate refresh for every invisible change, or silently replace a real freshness requirement with a longer TTL.
 
 Check both directions: a required visible change must trigger refresh or be covered by a justified fallback; bookkeeping-only changes should not defeat intended reuse. Include passage of time without writes, failed/partial jobs, unknown fingerprints, concurrent writes and data snapshots. Review deterministic ordering, `NULL`, field/row boundaries and canonical serialization; ambiguous serialization can hide changes even when a hash function itself works correctly. A hash is not proof of complete dependency coverage. Preserve authorization and never share personalized data just to improve hit rate.
+
+Inspect change distributions by source/adapter and field where evidence exists. Derived identifiers that shift with a moving window, or fields alternating between a value and `NULL`, can repeatedly report changes despite equivalent intended input. Compare replayed normalized snapshots and legitimate visible changes; fix unstable normalization or identity rules rather than excluding meaningful fields from the fingerprint. Keep raw values and personal identifiers out of change summaries, and include their collection cost.
 
 Assess the optimization's own work: before/after fingerprint scans, change-log writes, sorting/aggregation, locks, stored-response fetches, retries and fallback refreshes. Compare avoided work with added work at realistic data size and frequency, including growth. Returning a small hash limits that query's result payload but does not prove that computing it or the overall workflow is cheaper. Distinguish confirmed incorrect output, a supported waste mechanism, accepted tradeoffs and unverified runtime magnitude.
 
@@ -72,6 +84,8 @@ Record actual commands, versions, data shape, cache state, event/call counts, re
 
 Specify metric, source, observation window/reset boundary, review cadence, owner if known and a practical action. Use provider usage and active-time trends plus application aggregates such as job/refresh counts, changed versus unchanged work, query/loader calls, payload samples, cache hit/miss/fallback counts and fingerprint duration. Preserve privacy: no raw credentials, account identifiers, personal query parameters or customer payloads in reports.
 
+Check whether evidence connects a request or job phase to its loader/service work, rather than showing only function duration. Prefer low-cardinality route templates, loader names, key classes and aggregate call/cache counters with suitable sampling and retention. Do not require a raw log per read, full user agents or dynamic keys. When attribution is missing, recommend only the instrumentation needed to resolve uncertainty; it need not block fixes already proven by code or other evidence. Instrumentation remains proposed work, not permission to change production logging during the audit.
+
 Record statistics reset/restart behavior and collection gaps; do not assume counters are lifetime totals or that every platform persists them through suspend. Avoid creating a frequent SQL health/statistics poll that defeats the desired idle periods. Prefer existing provider telemetry or collection during already-active windows where suitable. Propose instrumentation rather than installing it during the audit.
 
 Useful trigger forms need project-specific thresholds and sources:
@@ -89,3 +103,5 @@ Primary sources checked on 2026-11-13 illustrate semantics to verify, not a fixe
 - [Neon compute lifecycle](https://neon.com/docs/introduction/compute-lifecycle): activation, inactivity/suspend behavior, idle transactions and session-state considerations. Apply verified account semantics rather than copying a timeout into every project.
 - [Next.js cache handlers](https://nextjs.org/docs/app/api-reference/config/next-config-js/cacheHandlers): default process-local caching and configurable shared storage; verify the actual installed adapter and deployment behavior.
 - [PostgreSQL 17 pg_stat_statements](https://www.postgresql.org/docs/17/pgstatstatements.html): call/row/execution counters and reset/persistence settings, not a provider network-byte bill. Use the actual database version.
+
+Additional source checks on 2026-11-18: [Neon autoscaling](https://neon.com/docs/introduction/autoscaling) describes configured minimum/maximum capacity; [Next.js tag revalidation](https://nextjs.org/docs/app/api-reference/functions/revalidateTag) distinguishes invalidation from request-triggered rebuilding. Recheck installed versions and actual account/deployment behavior rather than treating these as universal settings.
