@@ -42,7 +42,7 @@ awk -F '\t' -v audit="$audit" -v tol=5 '
   cur != "" { body[cur] = body[cur] " " $0; next }
   END {
     for (k = 1; k <= nf; k++) {
-      f = fid[k]; best = 0; best_score = -1
+      f = fid[k]; best = 0; best_score = -1; nnamed = 0; delete named_ids
       # Without a Location field, fall back to file references in the finding body.
       text = (f in loc) ? loc[f] : body[f]
       if (!(f in loc)) loc[f] = " no Location field"
@@ -74,9 +74,12 @@ awk -F '\t' -v audit="$audit" -v tol=5 '
           # A decoy is a specific wrong claim; other findings on the same lines are not hits.
           if (kind[i] == "decoy" && !named) continue
           score += named
+          # A finding that names several planted defects (for example one merging two issues) credits each.
+          if (named && kind[i] == "defect" && mine[i] && !(eid[i] in named_ids)) { named_ids[eid[i]] = 1; nnamed++ }
           if (score > best_score) { best_score = score; best = i }
         }
       }
+      if (nnamed >= 1) { for (id in named_ids) hit[id] = hit[id] " " f; continue }
       if (best == 0) { unplanted++; printf "unplanted %s (%s)\n", f, substr(loc[f], 2) }
       else if (kind[best] == "defect" && !mine[best]) { other++; printf "other     %s matches %s, planted for another audit\n", f, eid[best] }
       else if (kind[best] == "decoy") { if (!(eid[best] in decoy_hit)) decoys++; decoy_hit[eid[best]] = decoy_hit[eid[best]] " " f }
