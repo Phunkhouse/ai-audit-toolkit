@@ -11,6 +11,7 @@ skills/
   audit-production/SKILL.md
   audit-performance/SKILL.md
   audit-architecture/SKILL.md
+  audit-code-cleanup/SKILL.md
   audit-web-quality/SKILL.md
   audit-scalability-cost/SKILL.md
   audit-legal-readiness/SKILL.md
@@ -21,6 +22,7 @@ references/
   severity.md
   performance-measurement.md
   architecture-review.md
+  code-cleanup-review.md
   web-quality-review.md
   scalability-cost-review.md
   resource-efficiency.md
@@ -57,11 +59,11 @@ The links point to this local clone. On another device, clone the repository aga
 
 ## Usage
 
-In the project you want to audit, invoke `audit-security`, `audit-correctness`, `audit-production`, `audit-performance`, `audit-architecture`, `audit-web-quality`, `audit-scalability-cost`, `audit-legal-readiness`, or `audit-test-ci`. In Claude Code, use `/audit-security`; in Codex, select the Skill or mention `$audit-security`.
+In the project you want to audit, invoke `audit-security`, `audit-correctness`, `audit-production`, `audit-performance`, `audit-architecture`, `audit-code-cleanup`, `audit-web-quality`, `audit-scalability-cost`, `audit-legal-readiness`, or `audit-test-ci`. In Claude Code, use `/audit-security`; in Codex, select the Skill or mention `$audit-security`.
 
 The audit first identifies the actual stack and scope. Optionally copy [`templates/project-context.md`](templates/project-context.md) to `docs/audits/context.md` in the audited project and fill in only facts that cannot be reliably derived from its repository. Check that context against the current code.
 
-Store reports in the audited project under `docs/audits/YYYY-MM-DD/` as `security.md`, `correctness.md`, `production.md`, `performance.md`, `architecture.md`, `web-quality.md`, `scalability-cost.md`, `legal-readiness.md`, or `test-ci.md`. If the target report exists, use the first free `YYYY-MM-DD-2`, `YYYY-MM-DD-3`, etc. directory; never overwrite a previous audit. Check earlier reports in `docs/audits/` and reconcile their findings. The audit may write its report there but must not change application code or project data. Run artifact-producing checks in a disposable copy outside the audited repository. Follow [`templates/report.md`](templates/report.md), including its coverage log, prior finding reconciliation, and `Not verified` table. Record the audited project's Git commit and this toolkit's commit in the report header, and note relevant uncommitted changes. Run `./scripts/validate.sh` to print the toolkit commit and working tree state; if it has no commit yet, write `uncommitted`. Findings must cite concrete evidence and use audit-specific IDs (`SEC-`, `COR-`, `PRD-`, `PERF-`, `ARC-`, `WEB-`, `SCE-`, `LEG-`, `TCI-`). Keep secrets, personal information, and sensitive production data out of reports.
+Store reports in the audited project under `docs/audits/YYYY-MM-DD/` as `security.md`, `correctness.md`, `production.md`, `performance.md`, `architecture.md`, `code-cleanup.md`, `web-quality.md`, `scalability-cost.md`, `legal-readiness.md`, or `test-ci.md`. If the target report exists, use the first free `YYYY-MM-DD-2`, `YYYY-MM-DD-3`, etc. directory; never overwrite a previous audit. Check earlier reports in `docs/audits/` and reconcile their findings. The audit may write its report there but must not change application code or project data. Run artifact-producing checks in a disposable copy outside the audited repository. Follow [`templates/report.md`](templates/report.md), including its coverage log, prior finding reconciliation, and `Not verified` table. Record the audited project's Git commit and this toolkit's commit in the report header, and note relevant uncommitted changes. Run `./scripts/validate.sh` to print the toolkit commit and working tree state; if it has no commit yet, write `uncommitted`. Findings must cite concrete evidence and use audit-specific IDs (`SEC-`, `COR-`, `PRD-`, `PERF-`, `ARC-`, `CLN-`, `WEB-`, `SCE-`, `LEG-`, `TCI-`). Keep secrets, personal information, and sensitive production data out of reports.
 
 Security reports can reveal exploitable issues. For a public audited repository, keep `docs/audits/` private or ignored, or publish the report only after the relevant fixes are in place. Do not commit an unresolved vulnerability report to a public repository.
 
@@ -84,6 +86,12 @@ Planning uses explicit proposed workloads. Built pre-launch code can expose a wa
 `audit-architecture` assesses boundaries, responsibilities, dependencies, data ownership, contracts, change impact and testability against actual project requirements. It starts with the observed architecture and relevant decisions, then traces critical flows. It records accepted tradeoffs and unknown rationale separately from findings.
 
 Follow [`references/architecture-review.md`](references/architecture-review.md) for evidence standards, counter-evidence and proportionate remediation. The optional architecture overview in the report template captures components, relationships and their sources. A monolith, large file or missing architectural pattern is not a defect on its own; release blockers require a concrete impact on the current release.
+
+## Code cleanup audits
+
+`audit-code-cleanup` reviews dead code and repository artifacts, duplicated rules, stale comments, and readability improvements supported by the project's runtime and build targets. It checks indirect consumers before recommending removal and produces a prioritized report with concrete verification steps. See the [code cleanup review guide](references/code-cleanup-review.md) for evidence checks and JS/TS examples.
+
+For projects with UI, it also identifies repeated patterns worth sharing. It checks the existing component kit and tokens first, then weighs reuse, a shared token, a focused component or keeping the pattern local. Reports explain which variants should remain and how to verify accessibility, interactions and responsive behavior.
 
 ## Web quality audits
 
@@ -131,7 +139,7 @@ After pulling a version that adds a Skill, rerun `./scripts/install.sh` to creat
 
 ## Current scope
 
-This version covers security, correctness, production readiness, performance, architecture, web quality, scalability and cost efficiency, legal readiness within its stated jurisdiction and topic scope, and test/CI efficiency. Triage can be added after experience with real audits. The toolkit does not fix the application or run intrusive tests.
+This version covers security, correctness, production readiness, performance, architecture, code cleanup, web quality, scalability and cost efficiency, legal readiness within its stated jurisdiction and topic scope, and test/CI efficiency. Triage can be added after experience with real audits. The toolkit does not fix the application or run intrusive tests.
 
 ## Development
 
