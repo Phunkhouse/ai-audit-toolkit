@@ -76,7 +76,8 @@ results="$results_dir/results.tsv"
 [[ -f "$results" ]] || printf 'time\ttoolkit\tstate\tfixture\taudit\tmodel\trun\tfound\tdefects\tdecoys\tunplanted\tfindings\tformat\tpreserved\treport\n' > "$results"
 
 prompt="Run the $skill Skill on the repository in the current directory and write its report as the Skill instructs. This is an unattended evaluation run: do not ask questions. Where a fact is missing, make a reasonable assumption and record it in the report."
-allowed='Read Grep Glob Write Edit Bash(git:*) Bash(ls:*) Bash(cat:*) Bash(find:*) Bash(wc:*) Bash(mktemp:*) Bash(tar:*) Bash(readlink:*) Bash(pwd) Bash(date:*) Bash(node:*) Bash(npm test:*) Bash(npm run test:*) Bash('"$repo_dir"'/scripts/validate.sh) Bash('"$repo_dir"'/scripts/check-report.sh:*)'
+# One comma-separated argument, so patterns containing spaces stay whole.
+allowed='Read,Grep,Glob,Write,Edit,Bash(git:*),Bash(ls:*),Bash(cat:*),Bash(find:*),Bash(wc:*),Bash(mktemp:*),Bash(tar:*),Bash(readlink:*),Bash(pwd),Bash(date:*),Bash(node:*),Bash(npm test:*),Bash(npm run test:*),Bash('"$repo_dir"'/scripts/validate.sh),Bash('"$repo_dir"'/scripts/check-report.sh:*)'
 
 for ((run = 1; run <= runs; run++)); do
   stamp="$(date +%Y%m%dT%H%M%S)"
@@ -97,16 +98,19 @@ for ((run = 1; run <= runs; run++)); do
   if [[ -n "${EVAL_AGENT_CMD:-}" ]]; then
     (cd "$target" && EVAL_PROMPT="$prompt" sh -c "$EVAL_AGENT_CMD") >"$log" 2>&1 || agent_status=$?
   else
-    args=(-p "$prompt" --permission-mode acceptEdits --allowedTools $allowed)
+    args=(-p "$prompt" --permission-mode acceptEdits --allowedTools "$allowed")
     [[ -n "$model" ]] && args+=(--model "$model")
-    (cd "$target" && claude "${args[@]}") >"$log" 2>&1 || agent_status=$?
+    (cd "$target" && claude "${args[@]}" </dev/null) >"$log" 2>&1 || agent_status=$?
   fi
   [[ "$agent_status" -eq 0 ]] || printf '  agent exited with %d; see %s\n' "$agent_status" "$log"
 
   report="$(find "$target/docs/audits" -name "$audit.md" -type f 2>/dev/null | sort | tail -n 1 || true)"
   if [[ -z "$report" ]]; then
-    printf '  no %s.md report written; see %s\n' "$audit" "$log"
-    printf '%s\t%s\t%s\t%s\t%s\t%s\t%d\t\t\t\t\t\tno report\t\t\n' "$stamp" "$toolkit_commit" "$toolkit_state" "$fixture" "$audit" "${model:-default}" "$run" >> "$results"
+    outcome='no report'
+    [[ "$agent_status" -eq 0 ]] || outcome="agent failed ($agent_status)"
+    printf '  %s; see %s\n' "$outcome" "$log"
+    grep -m1 -iE 'authenticate|login|error' "$log" | sed 's/^/  /' || true
+    printf '%s\t%s\t%s\t%s\t%s\t%s\t%d\t\t\t\t\t\t%s\t\t\n' "$stamp" "$toolkit_commit" "$toolkit_state" "$fixture" "$audit" "${model:-default}" "$run" "$outcome" >> "$results"
     [[ "$keep" -eq 1 ]] || rm -rf "$work"
     continue
   fi
