@@ -2,7 +2,7 @@
 
 Use with the skeleton in [`../report.md`](../report.md) and the finding fields in [`../../references/finding-format.md`](../../references/finding-format.md). Insert after `Findings`. Add the [resource efficiency sections](resource-efficiency.md) when scheduled, cached or metered work matters.
 
-**Additional finding fields.** For performance findings, state whether evidence is measured, code-proven or a hypothesis, and separate observed behavior from unverified runtime impact. Use the conditions and comparison guidance in `references/performance-measurement.md` when interpreting measurements. Reuse or cross-reference evidence from other audit types rather than presenting the same root cause as independent findings.
+**Additional finding fields.** Include `Priority` as defined in `references/severity.md`. For performance findings, state whether evidence is measured, code-proven or a hypothesis, and separate observed behavior from unverified runtime impact. Use the conditions and comparison guidance in `references/performance-measurement.md` when interpreting measurements. Reuse or cross-reference evidence from other audit types rather than presenting the same root cause as independent findings.
 
 ## Performance measurements
 

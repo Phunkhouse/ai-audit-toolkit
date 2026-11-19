@@ -38,6 +38,7 @@ Number IDs as described in `references/audit-rules.md`. Use the fields in `refer
 - Severity: Critical | High | Medium | Low
 - Confidence: High | Medium | Low
 - Status: Confirmed | Suspected
+- Priority: Now | Next | Later (performance, architecture, code cleanup and test/CI only)
 - Previous finding: <ID and report path, or none>
 - Location: `<path:line or exact artifact>`
 - Evidence: <specific behavior or result; include what was checked to disprove it; for performance, label it measured, code-proven or a hypothesis>

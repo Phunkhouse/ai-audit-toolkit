@@ -19,11 +19,25 @@ Every audit Skill relies on this file, `finding-format.md`, `severity.md` and `.
 - Record `git status --porcelain` of the audited repository before starting. Compare it at the end; only the new report may differ, and pre-existing changes must be preserved.
 - Run builds, tests, dependency installs and other artifact-producing checks only in a disposable copy outside the audited repository. A copy does not isolate databases, paid APIs or other live services; review commands and isolate those dependencies first. If a check cannot be isolated safely, skip it and record `Not verified`. Do not run destructive, intrusive or production tests.
 
+Create the copy from the audited repository's root like this. It reproduces the current commit plus staged, unstaged and untracked changes, and leaves the audited repository and its Git metadata untouched:
+
+```bash
+src="$(git rev-parse --show-toplevel)"
+copy="$(mktemp -d)/copy"
+git clone --quiet --no-local "$src" "$copy"
+git -C "$copy" checkout --quiet --detach "$(git -C "$src" rev-parse HEAD)"
+git -C "$src" diff --binary HEAD | git -C "$copy" apply --allow-empty
+git -C "$src" ls-files --others --exclude-standard -z | (cd "$src" && tar --null -T - -cf -) | tar -xf - -C "$copy"
+```
+
+Ignored files such as `.env`, local credentials, dependencies and build output are deliberately not copied. Install dependencies inside the copy. If a check needs configuration, create test-only values in the copy and record that you did; never copy live credentials into it. Submodules and Git LFS content need explicit handling; record it if they are missing. Do not use `git worktree add`, which writes to the audited repository's `.git`.
+
 ## Report location
 
 - Write the report to `docs/audits/YYYY-MM-DD/<filename>` in the audited project, using the filename the Skill names. If that file exists, use the first free `YYYY-MM-DD-2`, `YYYY-MM-DD-3`, etc. directory. Never overwrite or rewrite a previous report's findings.
 - A focused follow-up on the same audit type (for example, a bounded experiment after the main report) uses `<filename stem>-<topic>.md` in a dated directory and continues the same ID sequence.
 - Follow `../templates/report.md` and, if the Skill names one, its file in `../templates/sections/`.
+- After writing, run `<toolkit>/scripts/check-report.sh <report>` from the toolkit checkout found under Provenance, and fix every error it reports. It checks the header, required sections, IDs, exact field values and summary counts, not the substance of findings. If the toolkit checkout is unavailable, say the check was not run.
 
 ## Finding IDs
 

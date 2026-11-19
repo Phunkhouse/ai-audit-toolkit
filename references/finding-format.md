@@ -15,6 +15,7 @@
 - Severity: Critical | High | Medium | Low
 - Confidence: High | Medium | Low
 - Status: Confirmed | Suspected
+- Priority: Now | Next | Later (performance, architecture, code cleanup and test/CI only; see `severity.md`)
 - Previous finding: ID and report path, if previously reported
 - Location: `path/to/file:line` (or a line range)
 - Evidence: Specific relevant behavior, test, or configuration.
