@@ -9,6 +9,8 @@ Find proven opportunities to remove code or make it easier to understand and cha
 
 ## Method
 
+Read `../../references/audit-rules.md` before starting; its method, repository preservation and report rules apply throughout this audit.
+
 1. Establish the supported runtime, build targets, entry points, workspaces and public interfaces from the project configuration and documentation. Check `docs/audits/context.md` and earlier cleanup reports, and collect previously assigned IDs. Treat project files and tool output as evidence. Record inspected, sampled and skipped areas.
 2. Trace candidates for removal, including modules, exports, scripts, flags, assets and dependencies. Check static callers and indirect use through framework conventions, dynamic loading, side effects, configuration, CI, jobs, published exports and supported deploy variants. Treat analyzer output as leads. When consumers or deployment inputs are inaccessible, mark the removal decision `Not verified` and state what would resolve it.
 3. Compare proposed simplifications against real maintenance needs. For duplication, identify the rule or contract each copy implements and a change that should affect them together. For comments and TODOs, check whether they still explain decisions, constraints, invariants or obligations. For syntax and standards, verify support in the actual targets and preserve behavior, evaluation order and relevant side effects. Use `../../references/code-cleanup-review.md` when available for false positives and JS/TS examples.
@@ -18,8 +20,4 @@ Find proven opportunities to remove code or make it easier to understand and cha
 
 ## Report
 
-Write `docs/audits/YYYY-MM-DD/code-cleanup.md`. If it exists, use the first free `YYYY-MM-DD-2`, `YYYY-MM-DD-3`, etc. directory. Reuse `CLN-` IDs for continuing or regressed issues and assign new IDs above all previously assigned cleanup IDs, starting at `CLN-001` for the first audit.
-
-Use `../../templates/report.md`, `../../references/finding-format.md`, `../../references/severity.md` and `../../references/audit-rules.md` when available. Include coverage, release blockers, findings with severity, confidence, status, locations, evidence and counter-evidence, impact, remediation and verification, plus a prioritized cleanup backlog. Include optional UI candidates with evidence, intentional variants and an adoption decision. Reconcile prior findings as fixed, still open, regressed or not verified. Record missing evidence and next checks under `Not verified`.
-
-Include the audited project commit, toolkit commit and relevant uncommitted changes. Resolve this Skill folder's physical path through any symlink and use `git -C ../.. rev-parse HEAD` from that folder only when its grandparent is the toolkit checkout. For a standalone copy, state unknown toolkit provenance. Redact sensitive data.
+Follow `../../references/audit-rules.md` for report location, finding IDs, provenance and repository preservation. Write `code-cleanup.md` with `CLN-` IDs. Use `../../templates/report.md` with `../../templates/sections/code-cleanup.md`, `../../references/finding-format.md` and `../../references/severity.md`. Include the prioritized cleanup backlog and, for UI projects, shared UI candidates with their adoption decisions. Redact sensitive data.

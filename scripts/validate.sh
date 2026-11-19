@@ -31,6 +31,17 @@ for skill_dir in "$repo_dir"/skills/*; do
     exit 1
   fi
 
+  if ! grep -qF '../../references/audit-rules.md' "$skill"; then
+    printf 'Skill does not reference shared audit rules: %s\n' "$skill" >&2
+    exit 1
+  fi
+  while IFS= read -r prefix; do
+    if ! grep -qF "| \`$prefix\` |" "$repo_dir/references/audit-rules.md"; then
+      printf 'ID prefix %s in %s is missing from references/audit-rules.md\n' "$prefix" "$skill" >&2
+      exit 1
+    fi
+  done < <(grep -oE '`[A-Z]+-` IDs' "$skill" | grep -oE '[A-Z]+-' | sort -u || true)
+
   while IFS= read -r reference; do
     [[ -n "$reference" ]] || continue
     if [[ ! -e "$skill_dir/$reference" ]]; then
