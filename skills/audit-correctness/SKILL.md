@@ -9,7 +9,7 @@ Find material bugs that can cause wrong results, lost data or broken user workfl
 
 ## Method
 
-Read `../../references/audit-rules.md` before starting; its method, repository preservation and report rules apply throughout this audit.
+Read `../../references/audit-rules.md` before starting; its method, repository preservation and report rules apply throughout this audit. If it or the other shared files it names cannot be read, stop and tell the user the toolkit installation or file access is incomplete; do not write a report in an improvised format.
 
 1. Learn the intended behavior from code, tests, product documentation and, if present, `docs/audits/context.md`. Check `docs/audits/` for prior correctness reports, collect their assigned IDs and reconcile findings from the latest relevant report. Confirm that documented assumptions still match the current implementation.
 2. Identify critical flows and their invariants: inputs, state transitions, validation, persistence, concurrency, retries, failure recovery and boundaries with external services.

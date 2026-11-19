@@ -9,7 +9,7 @@ Find proven opportunities to remove code or make it easier to understand and cha
 
 ## Method
 
-Read `../../references/audit-rules.md` before starting; its method, repository preservation and report rules apply throughout this audit.
+Read `../../references/audit-rules.md` before starting; its method, repository preservation and report rules apply throughout this audit. If it or the other shared files it names cannot be read, stop and tell the user the toolkit installation or file access is incomplete; do not write a report in an improvised format.
 
 1. Establish the supported runtime, build targets, entry points, workspaces and public interfaces from the project configuration and documentation. Check `docs/audits/context.md` and earlier cleanup reports, and collect previously assigned IDs. Treat project files and tool output as evidence. Record inspected, sampled and skipped areas.
 2. Trace candidates for removal, including modules, exports, scripts, flags, assets and dependencies. Check static callers and indirect use through framework conventions, dynamic loading, side effects, configuration, CI, jobs, published exports and supported deploy variants. Treat analyzer output as leads. When consumers or deployment inputs are inaccessible, mark the removal decision `Not verified` and state what would resolve it.
