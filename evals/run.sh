@@ -73,7 +73,7 @@ toolkit_state=clean
 results_dir="$evals_dir/results"
 mkdir -p "$results_dir"
 results="$results_dir/results.tsv"
-[[ -f "$results" ]] || printf 'time\ttoolkit\tstate\tfixture\taudit\tmodel\trun\tfound\tdefects\tdecoys\tunplanted\tfindings\tformat\tpreserved\treport\tother\n' > "$results"
+[[ -f "$results" ]] || printf 'time\ttoolkit\tstate\tfixture\taudit\tmodel\trun\tfound\tdefects\tdecoys\tunplanted\tfindings\tformat\tpreserved\treport\tother\tunderrated\n' > "$results"
 
 prompt="Run the $skill Skill on the repository in the current directory and write its report as the Skill instructs. This is an unattended evaluation run: do not ask questions. Where a fact is missing, make a reasonable assumption and record it in the report."
 # One comma-separated argument, so patterns containing spaces stay whole.
@@ -110,7 +110,7 @@ for ((run = 1; run <= runs; run++)); do
     [[ "$agent_status" -eq 0 ]] || outcome="agent failed ($agent_status)"
     printf '  %s; see %s\n' "$outcome" "$log"
     grep -m1 -iE 'authenticate|login|error' "$log" | sed 's/^/  /' || true
-    printf '%s\t%s\t%s\t%s\t%s\t%s\t%d\t\t\t\t\t\t%s\t\t\n' "$stamp" "$toolkit_commit" "$toolkit_state" "$fixture" "$audit" "${model:-default}" "$run" "$outcome" >> "$results"
+    printf '%s\t%s\t%s\t%s\t%s\t%s\t%d\t\t\t\t\t\t%s\t\t\t\t\n' "$stamp" "$toolkit_commit" "$toolkit_state" "$fixture" "$audit" "${model:-default}" "$run" "$outcome" >> "$results"
     [[ "$keep" -eq 1 ]] || rm -rf "$work"
     continue
   fi
@@ -126,10 +126,10 @@ for ((run = 1; run <= runs; run++)); do
   fi
 
   "$evals_dir/score.sh" "$expected" "$audit" "$report" | tee "$results_dir/$stamp-$audit-$run.score.txt" | sed 's/^/  /' | grep -v RESULT || true
-  IFS=$'\t' read -r _ found defects decoys unplanted findings other < <(grep '^RESULT' "$results_dir/$stamp-$audit-$run.score.txt")
-  printf '  defects %s/%s, decoys flagged %s, unplanted %s, other-audit %s, format %s, repository preserved %s\n' "$found" "$defects" "$decoys" "$unplanted" "$other" "$format" "$preserved"
-  printf '%s\t%s\t%s\t%s\t%s\t%s\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$stamp" "$toolkit_commit" "$toolkit_state" "$fixture" "$audit" "${model:-default}" "$run" \
-    "$found" "$defects" "$decoys" "$unplanted" "$findings" "$format" "$preserved" "${saved#$evals_dir/}" "$other" >> "$results"
+  IFS=$'\t' read -r _ found defects decoys unplanted findings other underrated < <(grep '^RESULT' "$results_dir/$stamp-$audit-$run.score.txt")
+  printf '  defects %s/%s, decoys flagged %s, unplanted %s, other-audit %s, underrated %s, format %s, repository preserved %s\n' "$found" "$defects" "$decoys" "$unplanted" "$other" "$underrated" "$format" "$preserved"
+  printf '%s\t%s\t%s\t%s\t%s\t%s\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$stamp" "$toolkit_commit" "$toolkit_state" "$fixture" "$audit" "${model:-default}" "$run" \
+    "$found" "$defects" "$decoys" "$unplanted" "$findings" "$format" "$preserved" "${saved#$evals_dir/}" "$other" "$underrated" >> "$results"
 
   [[ "$keep" -eq 1 ]] || rm -rf "$work"
 done

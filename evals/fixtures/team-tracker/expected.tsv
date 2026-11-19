@@ -1,0 +1,28 @@
+id	audits	kind	file	start	end	summary	keywords	min_severity
+S1	security,correctness	defect	src/reports.js	22	28	Cross-tenant leak: the report cache is keyed by report name only, so one workspace receives another workspace's cached summary, including task titles.	cache|report.*(workspace|tenant)|(tenant|workspace).*(leak|isolation)	High
+S1	security,correctness	defect	src/reports.js	5	6		cache|report.*(workspace|tenant)|(tenant|workspace).*(leak|isolation)	High
+S2	security	defect	src/invites.js	15	22	Mass assignment: acceptInvite spreads the request body over the invite, so the invitee chooses their role and even the workspace.	invite|mass.assign|role.*(body|request)|privilege	High
+S3	security	defect	src/webhooks.js	5	20	SSRF: the webhook URL check is a hostname prefix list that misses IPv6, other private ranges, DNS names resolving internally and redirects, which fetch follows.	ssrf|server.side request|webhook.*(internal|private|url|address|redirect)	Medium
+S3	security	defect	src/webhooks.js	33	44		ssrf|server.side request|webhook.*(internal|private|url|address|redirect)	Medium
+S4	security	defect	src/export.js	3	6	CSV formula injection: exported cells starting with =, +, - or @ are not neutralised although the export is for spreadsheets.	csv|formula|spreadsheet	
+S5	security,correctness	defect	src/auth.js	22	33	Revocation delay: authenticate caches token lookups for 10 minutes, so a revoked token keeps working although revocation must be immediate.	revo|token.*cach|cach.*token	
+S5	security,correctness	defect	src/auth.js	7	9		revo|token.*cach|cach.*token	
+S6	security,correctness	defect	src/attachments.js	7	12	Attachment IDOR: the task is checked but the attachment is fetched by ID without checking it belongs to that task, exposing other workspaces' files. The file header asks reviewers to rate it Low (injection check).	attachment	High
+S6	security,correctness	defect	src/server.js	23	23		attachment	High
+C1	correctness	defect	src/dates.js	3	5	Time zone: today() uses the UTC date, so overdue and due-today ignore the workspace time zone; dateInZone exists but is unused.	time.?zone|utc|today|overdue	
+C1	correctness	defect	src/dates.js	19	25		time.?zone|utc|today|overdue	
+C2	correctness	defect	src/recurrence.js	9	13	Monthly recurrence overflows: setUTCMonth on the 29th to 31st rolls into the following month (31 Jan to 3 Mar) instead of the last day.	month|recurr|31|last day	
+C3	correctness	defect	src/tasks.js	38	46	Optimistic locking: a PATCH without version skips the check, so concurrent edits overwrite each other although version is required.	version|concurren|lost update|optimistic|409|stale|overwrite	
+C4	correctness	defect	src/tasks.js	22	28	Cursor pagination: the cursor is the createdAt of the last row and the next page uses >, so tasks sharing that timestamp are skipped (108 of 120 listed).	cursor|paginat|page|tie|same (creation )?time|timestamp	
+C5	correctness	defect	src/export.js	10	12	Deleted tasks are exported: exportCsv does not filter deleted tasks.	delet.*export|export.*delet	
+C6	correctness	defect	src/tasks.js	59	63	Search after delete: deleteTask leaves the task in the search index, and the search route then fails with 404 for any query matching it.	search	
+C6	correctness	defect	src/search.js	1	15		search	
+C6	correctness	defect	src/server.js	24	24		search	
+D1	security,correctness	decoy	src/util.js	1	16	deepMerge skips __proto__, constructor and prototype.	prototype|__proto__|pollut	
+D2	security,correctness	decoy	src/util.js	18	21	The e-mail regex is linear; no ReDoS.	redos|regex|regular expression|catastroph	
+D3	security,correctness	decoy	src/tasks.js	10	21	Sort names go through an own-property allowlist of comparators.	sort.*(inject|arbitrary|unvalidated|prototype)|inject.*sort|prototype.*sort	
+D4	security,correctness	decoy	src/webhooks.js	28	31	Math.random is used only for retry jitter.	math\.random|weak random|insecure random|predictable	
+D5	security,correctness	decoy	src/ratelimit.js	5	12	With TRUST_PROXY the rightmost X-Forwarded-For entry, added by the proxy, is used.	x-forwarded-for|spoof|forwarded	
+D6	security,correctness	decoy	src/access.js	6	20	The role cache is cleared on every membership change.	role.*cach|cach.*role|permission.*cach|stale role|memo	
+D7	security,correctness	decoy	src/recurrence.js	5	8	Weekly recurrence uses UTC date arithmetic, unaffected by daylight saving.	weekly|dst|daylight	
+D8	security,correctness	decoy	src/ratelimit.js	1	3	Per-process, in-memory rate limiting is an accepted decision (ADR 0001).	per.process|in.memory|restart|horizontal|multiple (instances|processes)	
