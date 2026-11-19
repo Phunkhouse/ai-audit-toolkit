@@ -1,0 +1,44 @@
+name: Validate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Validate Skills, links and scripts
+        run: ./scripts/validate.sh
+      - name: Check the eval scorer against its fixtures
+        run: |
+          set -euo pipefail
+          # A report that cites every planted defect at its first location must score full recall.
+          for fixture in evals/fixtures/*/; do
+            expected="$fixture/expected.tsv"
+            for audit in $(cut -f2 "$expected" | tail -n +2 | tr ',' '\n' | sort -u); do
+              report="$(mktemp)"
+              {
+                echo '## Findings'
+                awk -F '\t' -v audit="$audit" 'NR > 1 && $3 == "defect" && index("," $2 ",", "," audit ",") && !seen[$1]++ {
+                  printf "### X-%03d: planted %s\n- Severity: Critical\n- Location: `%s:%d-%d`\n", ++n, $1, $4, $5, $6
+                }' "$expected"
+              } > "$report"
+              result="$(evals/score.sh "$expected" "$audit" "$report" | grep '^RESULT')"
+              found="$(cut -f2 <<<"$result")"; total="$(cut -f3 <<<"$result")"; decoys="$(cut -f4 <<<"$result")"
+              echo "$fixture $audit: $found/$total found, $decoys decoys"
+              [[ "$found" == "$total" && "$decoys" == 0 ]]
+            done
+          done
