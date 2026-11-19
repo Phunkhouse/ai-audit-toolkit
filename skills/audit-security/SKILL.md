@@ -9,7 +9,7 @@ Identify exploitable vulnerabilities and meaningful security risks in the curren
 
 ## Method
 
-Read `../../references/audit-rules.md` before starting; its method, repository preservation and report rules apply throughout this audit.
+Read `../../references/audit-rules.md` before starting; its method, repository preservation and report rules apply throughout this audit. If it or the other shared files it names cannot be read, stop and tell the user the toolkit installation or file access is incomplete; do not write a report in an improvised format.
 
 1. Map the repository, dependencies, deployment artifacts and project documentation. Check `docs/audits/` for prior security reports, collect their assigned IDs and reconcile findings from the latest relevant report. Identify sensitive data, trust boundaries and exposed entry points.
 2. Select only applicable checks: authentication, authorization, tenant isolation, input handling and injection, data exposure, business logic abuse, dependencies and deployment configuration.

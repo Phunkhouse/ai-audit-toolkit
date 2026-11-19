@@ -9,7 +9,7 @@ Assess whether the current project can be deployed and operated reliably. Do not
 
 ## Method
 
-Read `../../references/audit-rules.md` before starting; its method, repository preservation and report rules apply throughout this audit.
+Read `../../references/audit-rules.md` before starting; its method, repository preservation and report rules apply throughout this audit. If it or the other shared files it names cannot be read, stop and tell the user the toolkit installation or file access is incomplete; do not write a report in an improvised format.
 
 1. Establish the target environment, release scope and critical user journeys from the repository and available project context. Check `docs/audits/` for prior production reports, collect their assigned IDs and reconcile findings from the latest relevant report.
 2. Inspect build and deployment configuration, environment variables and secrets handling, migrations, rollback, health checks, monitoring, failure behavior, backup and restore evidence, and operational documentation where relevant.

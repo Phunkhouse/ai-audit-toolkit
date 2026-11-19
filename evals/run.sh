@@ -98,7 +98,7 @@ for ((run = 1; run <= runs; run++)); do
   if [[ -n "${EVAL_AGENT_CMD:-}" ]]; then
     (cd "$target" && EVAL_PROMPT="$prompt" sh -c "$EVAL_AGENT_CMD") >"$log" 2>&1 || agent_status=$?
   else
-    args=(-p "$prompt" --permission-mode acceptEdits --allowedTools "$allowed")
+    args=(-p "$prompt" --permission-mode acceptEdits --add-dir "$repo_dir" --allowedTools "$allowed")
     [[ -n "$model" ]] && args+=(--model "$model")
     (cd "$target" && claude "${args[@]}" </dev/null) >"$log" 2>&1 || agent_status=$?
   fi
@@ -126,8 +126,8 @@ for ((run = 1; run <= runs; run++)); do
   fi
 
   "$evals_dir/score.sh" "$expected" "$audit" "$report" | tee "$results_dir/$stamp-$audit-$run.score.txt" | sed 's/^/  /' | grep -v RESULT || true
-  IFS=$'\t' read -r _ found defects decoys unplanted findings < <(grep '^RESULT' "$results_dir/$stamp-$audit-$run.score.txt")
-  printf '  defects %s/%s, decoys flagged %s, unplanted %s, format %s, repository preserved %s\n' "$found" "$defects" "$decoys" "$unplanted" "$format" "$preserved"
+  IFS=$'\t' read -r _ found defects decoys unplanted findings other < <(grep '^RESULT' "$results_dir/$stamp-$audit-$run.score.txt")
+  printf '  defects %s/%s, decoys flagged %s, unplanted %s, other-audit %s, format %s, repository preserved %s\n' "$found" "$defects" "$decoys" "$unplanted" "$other" "$format" "$preserved"
   printf '%s\t%s\t%s\t%s\t%s\t%s\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$stamp" "$toolkit_commit" "$toolkit_state" "$fixture" "$audit" "${model:-default}" "$run" \
     "$found" "$defects" "$decoys" "$unplanted" "$findings" "$format" "$preserved" "${saved#$evals_dir/}" >> "$results"
 
