@@ -3,7 +3,9 @@
 # Usage: evals/score.sh EXPECTED.tsv AUDIT REPORT.md
 #   AUDIT is the audit name used in the expected file, e.g. security or correctness.
 # Prints one line per planted item and finding, then a tab-separated RESULT line:
-#   RESULT  defects_found  defects_total  decoys_flagged  unplanted  findings  other_audit
+#   RESULT  defects_found  defects_total  decoys_flagged  unplanted  findings  other_audit  underrated
+# A defect is underrated when every finding that reports it has a lower Severity
+# than the expected.tsv min_severity column (optional).
 set -euo pipefail
 
 if [[ $# -ne 3 ]]; then
@@ -15,6 +17,8 @@ expected="$1" audit="$2" report="$3"
 
 awk -F '\t' -v audit="$audit" -v tol=5 '
   function abs(x) { return x < 0 ? -x : x }
+  function credit(id, f) { hit[id] = hit[id] " " f; if (rank[sev[f]] > best_sev[id]) best_sev[id] = rank[sev[f]] }
+  BEGIN { rank["Low"] = 1; rank["Medium"] = 2; rank["High"] = 3; rank["Critical"] = 4; name[1] = "Low"; name[2] = "Medium"; name[3] = "High"; name[4] = "Critical" }
   function ends_with(s, t) { return length(s) >= length(t) && substr(s, length(s) - length(t) + 1) == t }
   function same_file(cited, want) {
     sub(/^\.\//, "", cited)
@@ -24,7 +28,7 @@ awk -F '\t' -v audit="$audit" -v tol=5 '
   FNR == NR {
     if (FNR == 1) next
     # Keep every row for matching; only defects for this audit count toward recall.
-    n++; eid[n] = $1; kind[n] = $3; efile[n] = $4; es[n] = $5 + 0; ee[n] = $6 + 0; ekw[n] = tolower($8)
+    n++; eid[n] = $1; kind[n] = $3; efile[n] = $4; es[n] = $5 + 0; ee[n] = $6 + 0; ekw[n] = tolower($8); if ($9 != "") emin[$1] = $9
     mine[n] = (index("," $2 ",", "," audit ",") > 0)
     if (mine[n] && $3 == "defect" && !($1 in counted)) { counted[$1] = 1; defects++ }
     rows_in_file[$4]++
@@ -38,6 +42,7 @@ awk -F '\t' -v audit="$audit" -v tol=5 '
   # separately from format, which check-report.sh reports.
   /^### [A-Z]+-[0-9]+([^0-9]|$)/ { cur = $0; sub(/^### /, "", cur); match(cur, /^[A-Z]+-[0-9]+/); cur = substr(cur, 1, RLENGTH); nf++; fid[nf] = cur; title[cur] = tolower($0); next }
   /^#/ { cur = ""; next }
+  cur != "" && /^- Severity:/ { s = $0; sub(/^- Severity:[ *]*/, "", s); match(s, /^[A-Za-z]+/); sev[cur] = substr(s, 1, RLENGTH); next }
   cur != "" && /^- Location:/ { loc[cur] = loc[cur] " " substr($0, 13); next }
   cur != "" { body[cur] = body[cur] " " $0; next }
   END {
@@ -79,20 +84,26 @@ awk -F '\t' -v audit="$audit" -v tol=5 '
           if (score > best_score) { best_score = score; best = i }
         }
       }
-      if (nnamed >= 1) { for (id in named_ids) hit[id] = hit[id] " " f; continue }
+      if (nnamed >= 1) { for (id in named_ids) credit(id, f); continue }
       if (best == 0) { unplanted++; printf "unplanted %s (%s)\n", f, substr(loc[f], 2) }
       else if (kind[best] == "defect" && !mine[best]) { other++; printf "other     %s matches %s, planted for another audit\n", f, eid[best] }
       else if (kind[best] == "decoy") { if (!(eid[best] in decoy_hit)) decoys++; decoy_hit[eid[best]] = decoy_hit[eid[best]] " " f }
-      else hit[eid[best]] = hit[eid[best]] " " f
+      else credit(eid[best], f)
     }
     for (i = 1; i <= n; i++) {
       if (eid[i] in printed || (!mine[i] && kind[i] == "defect")) continue
       printed[eid[i]] = 1
       if (kind[i] == "defect") {
-        if (eid[i] in hit) { found++; printf "found     %s by%s\n", eid[i], hit[eid[i]] }
+        if (eid[i] in hit) {
+          found++; printf "found     %s by%s\n", eid[i], hit[eid[i]]
+          if ((eid[i] in emin) && best_sev[eid[i]] < rank[emin[eid[i]]]) {
+            underrated++
+            printf "underrated %s rated %s, expected at least %s\n", eid[i], (best_sev[eid[i]] ? name[best_sev[eid[i]]] : "unknown"), emin[eid[i]]
+          }
+        }
         else printf "missed    %s (%s:%d-%d)\n", eid[i], efile[i], es[i], ee[i]
       } else if (eid[i] in decoy_hit) printf "decoy     %s flagged by%s\n", eid[i], decoy_hit[eid[i]]
     }
-    printf "RESULT\t%d\t%d\t%d\t%d\t%d\t%d\n", found, defects, decoys, unplanted, nf, other
+    printf "RESULT\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", found, defects, decoys, unplanted, nf, other, underrated
   }
 ' "$expected" "$report"
