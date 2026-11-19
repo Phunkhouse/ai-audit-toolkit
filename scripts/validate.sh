@@ -75,7 +75,9 @@ while IFS= read -r doc; do
 done < <(find "$repo_dir" -path "$repo_dir/.git" -prune -o -type f -name '*.md' -print)
 
 bash -n "$script_dir/install.sh"
-printf 'Validated %s Skills, local Markdown links and installer syntax.\n' "$count"
+bash -n "$script_dir/check-report.sh"
+"$script_dir/check-report.sh" "$repo_dir/scripts/testdata/valid-report.md" >/dev/null
+printf 'Validated %s Skills, local Markdown links, script syntax and the report checker.\n' "$count"
 if git -C "$repo_dir" rev-parse --verify HEAD >/dev/null 2>&1; then
   printf 'Toolkit commit: %s\n' "$(git -C "$repo_dir" rev-parse HEAD)"
   if [[ -n "$(git -C "$repo_dir" status --porcelain --untracked-files=normal)" ]]; then

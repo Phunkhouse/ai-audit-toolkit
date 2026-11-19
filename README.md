@@ -50,6 +50,7 @@ templates/
 scripts/
   install.sh
   validate.sh
+  check-report.sh
 ```
 
 Each Skill contains its audit-specific workflow. [`references/audit-rules.md`](references/audit-rules.md) holds the rules every audit shares: repository preservation, report location, finding IDs, provenance and reconciliation. The other files in `references/` standardize severity, finding fields and audit-specific methods; `profiles/` add questions based on the detected stack. The AI/LLM profile applies only to projects that use models. Templates guide project context and the finished report: `templates/report.md` is the common skeleton, and each audit adds only its own file from `templates/sections/`.
@@ -72,7 +73,7 @@ In the project you want to audit, invoke `audit-security`, `audit-correctness`, 
 
 The audit first identifies the actual stack and scope. Optionally copy [`templates/project-context.md`](templates/project-context.md) to `docs/audits/context.md` in the audited project and fill in only facts that cannot be reliably derived from its repository. Check that context against the current code.
 
-Store reports in the audited project under `docs/audits/YYYY-MM-DD/` as `security.md`, `correctness.md`, `production.md`, `performance.md`, `architecture.md`, `code-cleanup.md`, `web-quality.md`, `scalability-cost.md`, `legal-readiness.md`, or `test-ci.md`. The audit writes only its report and never changes application code or project data. [`references/audit-rules.md`](references/audit-rules.md) defines dated directories for repeat runs, follow-up files, ID numbering, provenance in the report header and reconciliation with earlier reports. When a later change fixes a finding, record it in the report's `Remediation log` rather than editing the finding. Keep secrets, personal information, and sensitive production data out of reports.
+Store reports in the audited project under `docs/audits/YYYY-MM-DD/` as `security.md`, `correctness.md`, `production.md`, `performance.md`, `architecture.md`, `code-cleanup.md`, `web-quality.md`, `scalability-cost.md`, `legal-readiness.md`, or `test-ci.md`. The audit writes only its report and never changes application code or project data. [`references/audit-rules.md`](references/audit-rules.md) defines dated directories for repeat runs, follow-up files, ID numbering, provenance in the report header and reconciliation with earlier reports. When a later change fixes a finding, record it in the report's `Remediation log` rather than editing the finding. Each audit runs `./scripts/check-report.sh` on its report before finishing; you can run it yourself on any report. Keep secrets, personal information, and sensitive production data out of reports.
 
 Security reports can reveal exploitable issues. For a public audited repository, keep `docs/audits/` private or ignored, or publish the report only after the relevant fixes are in place. Do not commit an unresolved vulnerability report to a public repository.
 
@@ -152,4 +153,4 @@ This version covers security, correctness, production readiness, performance, ar
 
 ## Development
 
-After changing a Skill, run `./scripts/validate.sh` to check frontmatter, referenced paths, that each Skill uses the shared rules and a known ID prefix, local Markdown links and installer syntax. It also prints the toolkit commit for report headers. Preview installer actions with `./scripts/install.sh --dry-run` and removal with `./scripts/install.sh --uninstall --dry-run`.
+After changing a Skill, run `./scripts/validate.sh` to check frontmatter, referenced paths, that each Skill uses the shared rules and a known ID prefix, local Markdown links, script syntax and that the report checker accepts `scripts/testdata/valid-report.md`. It also prints the toolkit commit for report headers. Preview installer actions with `./scripts/install.sh --dry-run` and removal with `./scripts/install.sh --uninstall --dry-run`.
