@@ -41,7 +41,7 @@ Record relevant decision rationale, constraints and accepted tradeoffs with sour
 
 ## Findings
 
-Use `SEC-001`, `COR-001`, `PRD-001`, `PERF-001`, `ARC-001`, `WEB-001`, `SCE-001`, `LEG-001` or `TCI-001` according to the audit type for a first audit. In repeat audits, preserve a prior ID for the same issue and use the next number not previously assigned for each new issue. For every finding, use the fields in `references/finding-format.md`.
+Use `SEC-001`, `COR-001`, `PRD-001`, `PERF-001`, `ARC-001`, `CLN-001`, `WEB-001`, `SCE-001`, `LEG-001` or `TCI-001` according to the audit type for a first audit. In repeat audits, preserve a prior ID for the same issue and use the next number not previously assigned for each new issue. For every finding, use the fields in `references/finding-format.md`.
 
 ### <PREFIX>-001: <Short description>
 
@@ -56,6 +56,22 @@ Use `SEC-001`, `COR-001`, `PRD-001`, `PERF-001`, `ARC-001`, `WEB-001`, `SCE-001`
 - Verification: <how to confirm the fix>
 
 For architecture findings, include the affected requirement or change scenario, decision context and counter-evidence, and a proportionate remediation with migration steps and risks. Distinguish improvement priority from release-blocking impact.
+
+## Code cleanup assessment (optional)
+
+Prioritize by maintenance benefit, effort and risk. Reference finding IDs for verified issues and use `Not verified` for missing evidence that blocks a removal decision.
+
+| Priority and finding | Proposed change | Expected benefit | Effort and regression risk | Verification |
+| --- | --- | --- | --- | --- |
+| <priority and CLN-ID> | <smallest useful change> | <concrete maintenance scenario> | <effort and behavior or contracts at risk> | <targeted build, test or consumer checks> |
+
+### Shared UI candidates (when relevant)
+
+List evidence and an adoption decision for each repeated pattern. Reference a finding ID only when the pattern creates a concrete issue.
+
+| Pattern and locations | Shared intent and intentional variants | Adoption decision and rationale | Effort, risk and verification |
+| --- | --- | --- | --- |
+| <instances and existing primitives checked> | <what should change together and what remains specific> | <reuse, token, shared component or keep local> | <adoption effort and accessibility, responsive and interaction checks as applicable> |
 
 ## Performance measurements (optional)
 
