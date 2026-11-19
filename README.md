@@ -51,6 +51,10 @@ scripts/
   install.sh
   validate.sh
   check-report.sh
+evals/
+  run.sh
+  score.sh
+  fixtures/invoice-app/
 ```
 
 Each Skill contains its audit-specific workflow. [`references/audit-rules.md`](references/audit-rules.md) holds the rules every audit shares: repository preservation, report location, finding IDs, provenance and reconciliation. The other files in `references/` standardize severity, finding fields and audit-specific methods; `profiles/` add questions based on the detected stack. The AI/LLM profile applies only to projects that use models. Templates guide project context and the finished report: `templates/report.md` is the common skeleton, and each audit adds only its own file from `templates/sections/`.
@@ -153,4 +157,4 @@ This version covers security, correctness, production readiness, performance, ar
 
 ## Development
 
-After changing a Skill, run `./scripts/validate.sh` to check frontmatter, referenced paths, that each Skill uses the shared rules and a known ID prefix, local Markdown links, script syntax and that the report checker accepts `scripts/testdata/valid-report.md`. It also prints the toolkit commit for report headers. Preview installer actions with `./scripts/install.sh --dry-run` and removal with `./scripts/install.sh --uninstall --dry-run`.
+After changing a Skill, run `./scripts/validate.sh` to check frontmatter, referenced paths, that each Skill uses the shared rules and a known ID prefix, local Markdown links, script syntax and that the report checker accepts `scripts/testdata/valid-report.md`. It also prints the toolkit commit for report headers. To check whether a Skill change improves audit results, run the evals in [`evals/`](evals/README.md) before and after the change. Preview installer actions with `./scripts/install.sh --dry-run` and removal with `./scripts/install.sh --uninstall --dry-run`.

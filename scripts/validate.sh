@@ -75,7 +75,7 @@ while IFS= read -r doc; do
 done < <(find "$repo_dir" -path "$repo_dir/.git" -prune -o -type f -name '*.md' -print)
 
 bash -n "$script_dir/install.sh"
-bash -n "$script_dir/check-report.sh"
+for script in "$script_dir/check-report.sh" "$repo_dir/evals/run.sh" "$repo_dir/evals/score.sh"; do bash -n "$script"; done
 "$script_dir/check-report.sh" "$repo_dir/scripts/testdata/valid-report.md" >/dev/null
 printf 'Validated %s Skills, local Markdown links, script syntax and the report checker.\n' "$count"
 if git -C "$repo_dir" rev-parse --verify HEAD >/dev/null 2>&1; then
