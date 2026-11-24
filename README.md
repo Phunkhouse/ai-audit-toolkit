@@ -82,5 +82,6 @@ Current models find nearly every planted defect, so the evals mainly catch regre
 - Run `./scripts/validate.sh` after changing anything. It checks Skill frontmatter, referenced paths, shared-rule and ID-prefix use, Markdown links, script syntax and the report checker. It also prints the toolkit commit.
 - CI runs the same check on every pull request and push to `main`, plus a self-check of the eval scorer. The paid evals stay manual.
 - Preview installer changes with `./scripts/install.sh --dry-run` or `./scripts/install.sh --uninstall --dry-run`.
+- Releases are annotated tags only: `git tag -a vX.Y.Z -m "vX.Y.Z: <theme>"` on a `main` commit whose CI passed, then `git push origin vX.Y.Z`. Do not create GitHub Releases. Tag or push only when the owner asks.
 - The [AI starter pack](https://github.com/Phunkhouse/ai-starter-pack) offers optional CI, Playwright and runner recipes that `audit-test-ci` can assess; nothing in this toolkit depends on it.
 - The [AI Discovery Toolkit](https://github.com/Phunkhouse/ai-discovery-toolkit) writes a `handover.md` with acceptance criteria and open assumptions; point to it from `docs/audits/context.md` so audits can check behavior against what was approved. Nothing in this toolkit depends on it.
