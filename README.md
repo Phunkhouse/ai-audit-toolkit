@@ -83,3 +83,4 @@ Current models find nearly every planted defect, so the evals mainly catch regre
 - CI runs the same check on every pull request and push to `main`, plus a self-check of the eval scorer. The paid evals stay manual.
 - Preview installer changes with `./scripts/install.sh --dry-run` or `./scripts/install.sh --uninstall --dry-run`.
 - The [AI starter pack](https://github.com/Phunkhouse/ai-starter-pack) offers optional CI, Playwright and runner recipes that `audit-test-ci` can assess; nothing in this toolkit depends on it.
+- The [AI Discovery Toolkit](https://github.com/Phunkhouse/ai-discovery-toolkit) writes a `handover.md` with acceptance criteria and open assumptions; point to it from `docs/audits/context.md` so audits can check behavior against what was approved. Nothing in this toolkit depends on it.

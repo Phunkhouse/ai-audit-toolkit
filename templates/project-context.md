@@ -6,6 +6,7 @@ Fill in only information that cannot be reliably inferred from the current repos
 
 - Who the application serves:
 - Key user flows and operations that must not fail:
+- Discovery handover, if the project has one (for example `docs/discovery/<slug>/handover.md`): its acceptance criteria, constraints and open assumptions describe intended behavior; name its source date, and note any approved change since that the handover does not show:
 
 ## Deployment and scope boundaries
 
