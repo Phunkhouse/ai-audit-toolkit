@@ -6,7 +6,7 @@ Use only when the audited application calls language models or gives agents tool
 - Trace model output into tools, queries, file paths, API calls and the DOM. Check validation and authorization before effects occur.
 - Check that model API keys and other credentials stay server-side and are not exposed in bundles, logs or responses.
 - Review agent tool permissions, approval boundaries, tenant isolation and limits on side effects.
-- Check cost abuse controls: authentication, rate limits, quotas, token budgets and safeguards against unbounded retries or loops.
+- Check cost abuse controls: authentication, rate limits, quotas, token budgets and safeguards against unbounded retries or loops. Use the cost and quota section of `../references/availability-abuse.md` to trace who can trigger model calls and what caps them.
 - Distinguish demonstrated exploits from hypothetical prompt injection patterns. Record the attacker-controlled input, reachable path, missing control and realistic impact.
 
 ## Performance checks

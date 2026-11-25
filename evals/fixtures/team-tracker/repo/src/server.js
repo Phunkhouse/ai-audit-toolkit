@@ -3,7 +3,7 @@ import { send, readJson, HttpError } from './http.js';
 import { authenticate } from './auth.js';
 import { requireRole } from './access.js';
 import { listTasks, getTask, updateTask, deleteTask, completeTask } from './tasks.js';
-import { search } from './search.js';
+import { search, searchPattern } from './search.js';
 import { report } from './reports.js';
 import { createInvite, acceptInvite } from './invites.js';
 import { registerWebhook, deliver } from './webhooks.js';
@@ -21,6 +21,7 @@ const routes = [
   ['POST', /^\/w\/([\w-]+)\/tasks\/([\w-]+)\/complete$/, 'editor', (ws, url, req, id) => completeTask(ws, id)],
   ['DELETE', /^\/w\/([\w-]+)\/tasks\/([\w-]+)$/, 'editor', (ws, url, req, id) => (deleteTask(ws, id), { ok: true })],
   ['GET', /^\/w\/([\w-]+)\/tasks\/([\w-]+)\/attachments\/([\w-]+)$/, 'viewer', (ws, url, req, id, attachmentId) => getAttachment(ws, id, attachmentId).bytes],
+  ['GET', /^\/w\/([\w-]+)\/search\/pattern$/, 'viewer', (ws, url) => searchPattern(ws, url.searchParams.get('re') ?? '')],
   ['GET', /^\/w\/([\w-]+)\/search$/, 'viewer', (ws, url) => search(ws, url.searchParams.get('q') ?? '').map((id) => getTask(ws, id))],
   ['GET', /^\/w\/([\w-]+)\/reports\/([\w-]+)$/, 'viewer', (ws, url, req, name) => report(ws, name)],
   ['GET', /^\/w\/([\w-]+)\/export\.csv$/, 'admin', (ws) => exportCsv(ws)],

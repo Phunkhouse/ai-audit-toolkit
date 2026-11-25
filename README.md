@@ -6,7 +6,7 @@ Skills for auditing software projects with Claude Code and Codex. Each audit sta
 
 | Skill | Reviews | Report | IDs |
 | --- | --- | --- | --- |
-| `audit-security` | Exploitable vulnerabilities and meaningful security risks | `security.md` | `SEC-` |
+| `audit-security` | Exploitable vulnerabilities and meaningful security risks, including denial of service, automated abuse and cost exhaustion | `security.md` | `SEC-` |
 | `audit-correctness` | Wrong results, data integrity and edge cases against intended workflows | `correctness.md` | `COR-` |
 | `audit-production` | Release and operational readiness: deployment, rollback, monitoring, backups | `production.md` | `PRD-` |
 | `audit-performance` | Latency, throughput, resource use and operating cost of critical flows | `performance.md` | `PERF-` |
@@ -61,7 +61,7 @@ The shared rules are in [`references/audit-rules.md`](references/audit-rules.md)
 | Path | Contents |
 | --- | --- |
 | `skills/` | One `SKILL.md` per audit with its audit-specific method |
-| `references/` | Shared rules, severity, finding format, and method guides for performance measurement, architecture, cleanup, web quality, scalability, resource efficiency, legal review and test/CI |
+| `references/` | Shared rules, severity, finding format, and method guides for availability and abuse, performance measurement, architecture, cleanup, web quality, scalability, resource efficiency, legal review and test/CI |
 | `profiles/` | Stack-specific questions for frontend, backend, database, infrastructure and AI/LLM projects |
 | `templates/` | `report.md` (common skeleton), `sections/` (one file per audit) and `project-context.md` |
 | `scripts/` | `install.sh`, `validate.sh` and `check-report.sh` |
