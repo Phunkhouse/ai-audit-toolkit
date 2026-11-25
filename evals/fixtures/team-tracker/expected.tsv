@@ -16,8 +16,8 @@ C3	correctness	defect	src/tasks.js	38	46	Optimistic locking: a PATCH without ver
 C4	correctness	defect	src/tasks.js	22	28	Cursor pagination: the cursor is the createdAt of the last row and the next page uses >, so tasks sharing that timestamp are skipped (108 of 120 listed).	cursor|paginat|page|tie|same (creation )?time|timestamp	
 C5	correctness	defect	src/export.js	10	12	Deleted tasks are exported: exportCsv does not filter deleted tasks.	delet.*export|export.*delet	
 C6	correctness	defect	src/tasks.js	59	63	Search after delete: deleteTask leaves the task in the search index, and the search route then fails with 404 for any query matching it.	search	
-C6	correctness	defect	src/search.js	1	15		search	
-C6	correctness	defect	src/server.js	24	24		search	
+C6	correctness	defect	src/search.js	3	17		search	
+C6	correctness	defect	src/server.js	25	25		search	
 D1	security,correctness	decoy	src/util.js	1	16	deepMerge skips __proto__, constructor and prototype.	prototype|__proto__|pollut	
 D2	security,correctness	decoy	src/util.js	18	21	The e-mail regex is linear; no ReDoS.	redos|regex|regular expression|catastroph	
 D3	security,correctness	decoy	src/tasks.js	10	21	Sort names go through an own-property allowlist of comparators.	sort.*(inject|arbitrary|unvalidated|prototype)|inject.*sort|prototype.*sort	
@@ -25,4 +25,6 @@ D4	security,correctness	decoy	src/webhooks.js	28	31	Math.random is used only for
 D5	security,correctness	decoy	src/ratelimit.js	5	12	With TRUST_PROXY the rightmost X-Forwarded-For entry, added by the proxy, is used.	x-forwarded-for|spoof|forwarded	
 D6	security,correctness	decoy	src/access.js	6	20	The role cache is cleared on every membership change.	role.*cach|cach.*role|permission.*cach|stale role|memo	
 D7	security,correctness	decoy	src/recurrence.js	5	8	Weekly recurrence uses UTC date arithmetic, unaffected by daylight saving.	weekly|dst|daylight	
-D8	security,correctness	decoy	src/ratelimit.js	1	3	Per-process, in-memory rate limiting is an accepted decision (ADR 0001).	per.process|in.memory|restart|horizontal|multiple (instances|processes)	
+D8	security,correctness	decoy	src/ratelimit.js	1	3	Per-process, in-memory rate limiting is an accepted decision (ADR 0001).	per.process|restart|horizontal|multiple (instances|processes)|across instances	
+S7	security	defect	src/search.js	30	36	ReDoS: any viewer supplies a regular expression that runs synchronously over every title, so one request can block the single Node process for every workspace (2.1 s measured with a 27-character title).	redos|regex|regular expression|pattern|catastroph|backtrack|event loop|denial|dos\b	Medium
+S7	security	defect	src/server.js	24	24		redos|regex|regular expression|pattern|catastroph|backtrack|event loop|denial|dos\b	Medium

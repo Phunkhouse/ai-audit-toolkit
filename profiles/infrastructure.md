@@ -8,6 +8,7 @@ Use for deployment, CI/CD, hosting, networks, and external services when they ar
 - Review CI workflow permissions, dependency lockfiles and artifact integrity, and whether third-party CI actions are pinned appropriately.
 - If Git history is in scope, look for committed secrets using a read-only history scan (for example, `gitleaks` if installed). Do not print secret values in the report; record redacted evidence and whether history was scanned.
 - Assess limits, timeouts, retries, and behavior when key dependencies fail.
+- Check edge protection (CDN, WAF or provider DDoS defenses), whether the origin is reachable around it, and behavior at provider rate limits and spend caps. Configuration outside the repository is `Not verified` unless evidence is available; see `../references/availability-abuse.md`.
 - Mark the live state of hosting, backups, and the production database `Not verified` if you cannot access them.
 
 ## Performance checks

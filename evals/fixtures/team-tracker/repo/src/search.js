@@ -1,3 +1,5 @@
+import { tasks } from './store.js';
+
 // Inverted index of title words per workspace, updated on create and update.
 const index = new Map(); // `${workspaceId}:${word}` -> Set<taskId>
 
@@ -23,4 +25,12 @@ export function search(workspaceId, query) {
     result = result ? new Set([...result].filter((id) => ids.has(id))) : new Set(ids);
   }
   return [...result];
+}
+
+// Pattern search for power users: `re` is a JavaScript regular expression matched against titles.
+export function searchPattern(workspaceId, pattern) {
+  const re = new RegExp(pattern, 'i');
+  return [...tasks.values()]
+    .filter((t) => t.workspaceId === workspaceId && !t.deleted && re.test(t.title))
+    .map((t) => t.id);
 }

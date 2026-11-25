@@ -19,7 +19,8 @@ A multi-tenant task tracker. Each workspace is an isolated tenant: members of on
 
 ## Search, reports and exports
 
-- `GET /w/:ws/search?q=` searches task titles in the workspace.
+- `GET /w/:ws/search?q=` searches task titles in the workspace. `GET /w/:ws/search/pattern?re=` matches titles against a regular expression.
+- The service runs as one Node process (see `docs/decisions/0001-single-process.md`), so it must stay responsive to every workspace when one workspace's users send unusual requests.
 - `GET /w/:ws/reports/:name` returns a summary report. Reports are cached for 60 seconds.
 - `GET /w/:ws/export.csv` (admins) exports tasks as CSV for spreadsheet use.
 
